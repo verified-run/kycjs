@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="icon" type="image/png" href="<%= htmlWebpackPlugin.files.favicon %>">
+    <link  rel="shortcut icon">
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"></head>
+  <body>
+
+    <div class="row">
+      <!-- Stream -->
+      <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="amin-container">
+          <video id="camera-stream" playsinline></video>
+          <div id="invalid-box" class="dngr"></div>
+          <!-- <img id="id-card-placeholder" src="/placeholder.jpg" class="card-placeholder"> -->
+          <div class="action-box">
+            <button class="record-btn"> Start </button>
+            <button class="capture-btn"> Shot </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="col">
+          <div class="row">
+          </div>
+          <div class="row">
+            <div class="col">
+              <h3 id="disc_card">plz scan your card now.</h3>
+              <h3 id="disc_face">plz record the statement.</h3>
+              <p id="disc_face_statement">plz say: <b id="what-to-say"></b>
+              </p>
+              <p>isValidForRecording: <b id="is-valid-for-recording"></b>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div v-if="debug" class="col-6">
+        <video id="verify" controls autoplay></video>
+
+        <div v-if="debug" class="col-6" id="debug-canvas"></div>
+
+      </div>
+    </div>
+
+    <!--<div class="container">
+    <div class="row">
+      <div class="col">
+        <video id="camera-stream" playsinline></video>
+        <img
+          id="id-card-placeholder"
+          src="/placeholder.jpg"
+        />
+        <span id="invalid-box"></span>
+      </div>
+      <div v-if="debug" class="col">
+        <div class="row">
+          <div v-if="debug" class="col-6">
+            <video id="verify" controls autoplay></video>
+          </div>
+          <div v-if="debug" class="col-6" id="debug-canvas"></div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h3 id="disc_card">plz scan your card now.</h3>
+            <h3 id="disc_face">plz record the statement.</h3>
+            <p id="disc_face_statement">plz say: <b id="what-to-say"></b></p>
+            <p>isValidForRecording: <b id="is-valid-for-recording"></b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+         id="record-btn"
+        >
+        start
+        </button>
+        <button
+         id="capture-btn"
+        >
+          take a shot
+        </button>
+      </div>
+    </div>
+  </div>-->
+  </body>
+</html>
