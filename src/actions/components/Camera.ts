@@ -26,6 +26,18 @@ export class Camera {
         });
     }
 
+    capture(): Promise<Blob> {
+        return new Promise((resolve) => {
+            var canvas = document.createElement('canvas');
+            canvas.width = this.video.videoWidth;
+            canvas.height = this.video.videoHeight;
+            canvas.getContext('2d')?.drawImage(this.video, 0, 0, this.video.videoWidth, this.video.videoHeight);
+            canvas.toBlob((blob) => {
+                resolve(<Blob>blob);
+            });
+        })
+    }
+
     cleanup(): void {
         this.cameraStream.getTracks().forEach(track => track.stop())
         this.video.pause();

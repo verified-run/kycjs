@@ -4,10 +4,15 @@ export interface KycEventError {
 }
 export interface KycEventNextJob {
     job: string,
-    whatToSay: string,
+    whatToSay?: string,
+    placeholderUrl?: string,
 }
-export type eventName = 'error' | 'next_job';
-export type KycEvent = KycEventError | KycEventNextJob;
+export interface KycEventCaptureProgress {
+    job: string,
+    progress: number,
+}
+export type eventName = 'error' | 'next_job' | 'capture_progress';
+export type KycEvent = KycEventError | KycEventNextJob | KycEventCaptureProgress;
 export type EventCb = (e: KycEvent) => void;
 
 export interface EventList {
@@ -22,11 +27,11 @@ export class EventManager {
     }
 
     public dispatchEvent(name: eventName, e: KycEvent) {
-        if (!this.events[name]){
+        if (!this.events[name]) {
             console.log(`event ${name} is not registered!`);
             return;
         }
-        console.log(`dispatching event: ${name}`);
+        // console.log(`dispatching event: ${name}`);
         this.events[name](e);
     }
 }

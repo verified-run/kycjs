@@ -10,14 +10,18 @@ export class PressHold {
         private released: () => void,
     ) {
         let vm = this;
+        this.element.className = "inactive";
+
         this.handlePress = () => {
             if (vm.isPressed) return;
+            this.element.className = "active";
             vm.isPressed = true;
             vm.pressed();
         }
 
         this.handleRelease = () => {
             if (!this.isPressed) return;
+            this.element.className = "inactive";
             this.isPressed = false;
             this.released();
         }

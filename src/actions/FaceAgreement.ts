@@ -1,3 +1,4 @@
+import { ClientRequest } from "../wsMessages";
 import { FaceText } from "./FaceText";
 
 export class FaceAgreement extends FaceText {
@@ -8,4 +9,10 @@ export class FaceAgreement extends FaceText {
         })
     }
 
+    protected response(res: ArrayBuffer):ClientRequest {
+        return ClientRequest.create({
+            id: this.serverRequest.id,
+            faceAgreement: { video: new Uint8Array(res) }
+        });
+    }
 }

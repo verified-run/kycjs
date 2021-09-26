@@ -2190,6 +2190,11 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
          * @memberof ClientRequest
          * @interface IStart
          * @property {string|null} [identifier] Start identifier
+         * @property {string|null} [appName] Start appName
+         * @property {string|null} [packageName] Start packageName
+         * @property {string|null} [manufacturer] Start manufacturer
+         * @property {string|null} [platform] Start platform
+         * @property {string|null} [platformVersion] Start platformVersion
          */
 
         /**
@@ -2214,6 +2219,46 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
          * @instance
          */
         Start.prototype.identifier = "";
+
+        /**
+         * Start appName.
+         * @member {string} appName
+         * @memberof ClientRequest.Start
+         * @instance
+         */
+        Start.prototype.appName = "";
+
+        /**
+         * Start packageName.
+         * @member {string} packageName
+         * @memberof ClientRequest.Start
+         * @instance
+         */
+        Start.prototype.packageName = "";
+
+        /**
+         * Start manufacturer.
+         * @member {string} manufacturer
+         * @memberof ClientRequest.Start
+         * @instance
+         */
+        Start.prototype.manufacturer = "";
+
+        /**
+         * Start platform.
+         * @member {string} platform
+         * @memberof ClientRequest.Start
+         * @instance
+         */
+        Start.prototype.platform = "";
+
+        /**
+         * Start platformVersion.
+         * @member {string} platformVersion
+         * @memberof ClientRequest.Start
+         * @instance
+         */
+        Start.prototype.platformVersion = "";
 
         /**
          * Creates a new Start instance using the specified properties.
@@ -2241,6 +2286,16 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
                 writer = $Writer.create();
             if (message.identifier != null && Object.hasOwnProperty.call(message, "identifier"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.identifier);
+            if (message.appName != null && Object.hasOwnProperty.call(message, "appName"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.appName);
+            if (message.packageName != null && Object.hasOwnProperty.call(message, "packageName"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.packageName);
+            if (message.manufacturer != null && Object.hasOwnProperty.call(message, "manufacturer"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.manufacturer);
+            if (message.platform != null && Object.hasOwnProperty.call(message, "platform"))
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.platform);
+            if (message.platformVersion != null && Object.hasOwnProperty.call(message, "platformVersion"))
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.platformVersion);
             return writer;
         };
 
@@ -2277,6 +2332,21 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
                 switch (tag >>> 3) {
                 case 1:
                     message.identifier = reader.string();
+                    break;
+                case 2:
+                    message.appName = reader.string();
+                    break;
+                case 3:
+                    message.packageName = reader.string();
+                    break;
+                case 4:
+                    message.manufacturer = reader.string();
+                    break;
+                case 5:
+                    message.platform = reader.string();
+                    break;
+                case 6:
+                    message.platformVersion = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -2316,6 +2386,21 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             if (message.identifier != null && message.hasOwnProperty("identifier"))
                 if (!$util.isString(message.identifier))
                     return "identifier: string expected";
+            if (message.appName != null && message.hasOwnProperty("appName"))
+                if (!$util.isString(message.appName))
+                    return "appName: string expected";
+            if (message.packageName != null && message.hasOwnProperty("packageName"))
+                if (!$util.isString(message.packageName))
+                    return "packageName: string expected";
+            if (message.manufacturer != null && message.hasOwnProperty("manufacturer"))
+                if (!$util.isString(message.manufacturer))
+                    return "manufacturer: string expected";
+            if (message.platform != null && message.hasOwnProperty("platform"))
+                if (!$util.isString(message.platform))
+                    return "platform: string expected";
+            if (message.platformVersion != null && message.hasOwnProperty("platformVersion"))
+                if (!$util.isString(message.platformVersion))
+                    return "platformVersion: string expected";
             return null;
         };
 
@@ -2333,6 +2418,16 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             let message = new $root.ClientRequest.Start();
             if (object.identifier != null)
                 message.identifier = String(object.identifier);
+            if (object.appName != null)
+                message.appName = String(object.appName);
+            if (object.packageName != null)
+                message.packageName = String(object.packageName);
+            if (object.manufacturer != null)
+                message.manufacturer = String(object.manufacturer);
+            if (object.platform != null)
+                message.platform = String(object.platform);
+            if (object.platformVersion != null)
+                message.platformVersion = String(object.platformVersion);
             return message;
         };
 
@@ -2349,10 +2444,26 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             if (!options)
                 options = {};
             let object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.identifier = "";
+                object.appName = "";
+                object.packageName = "";
+                object.manufacturer = "";
+                object.platform = "";
+                object.platformVersion = "";
+            }
             if (message.identifier != null && message.hasOwnProperty("identifier"))
                 object.identifier = message.identifier;
+            if (message.appName != null && message.hasOwnProperty("appName"))
+                object.appName = message.appName;
+            if (message.packageName != null && message.hasOwnProperty("packageName"))
+                object.packageName = message.packageName;
+            if (message.manufacturer != null && message.hasOwnProperty("manufacturer"))
+                object.manufacturer = message.manufacturer;
+            if (message.platform != null && message.hasOwnProperty("platform"))
+                object.platform = message.platform;
+            if (message.platformVersion != null && message.hasOwnProperty("platformVersion"))
+                object.platformVersion = message.platformVersion;
             return object;
         };
 

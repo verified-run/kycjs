@@ -1,5 +1,6 @@
 import { Verification, VerificationList } from "./actions/Verification";
 import { FaceText } from "./actions/FaceText";
+import { IdCard } from "./actions/IdCard";
 import { VideoElement } from "./types";
 import { WS } from "./WS";
 import { ServerRequest } from "./wsMessages";
@@ -12,6 +13,7 @@ export class VerificationManager {
     private actions: VerificationList = {
         "faceAgreement": FaceAgreement,
         "faceText": FaceText,
+        "idCard": IdCard,
     }
     
     private currentAction: Verification | null = null;

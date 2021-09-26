@@ -16,6 +16,7 @@ export class FaceText extends Verification {
     protected faceSpeakerValidator: FaceSpeakerValidator;
     protected canvasRender: CanvasRender;
     protected recorder: Recorder;
+    protected pressHoldBtn: HTMLButtonElement;
     protected pressHold: PressHold;
     protected canvasBox = {
         width: 150,
@@ -51,10 +52,17 @@ export class FaceText extends Verification {
             this.faceFeatureExtractor,
         );
 
-        this.recorder = new Recorder(this.canvasRender.getStream());
+        let stream = this.canvasRender.getStream();
+        stream.addTrack(this.Camera.getStream().getAudioTracks()[0]);
+        this.recorder = new Recorder(stream);
+
+        this.pressHoldBtn = <HTMLButtonElement>document.createElement("button");
+        this.pressHoldBtn.innerText = 'record';
+        
+        this.controlContainer.appendChild(this.pressHoldBtn)
 
         this.pressHold = new PressHold(
-            <HTMLButtonElement>this.controlContainer.getElementsByClassName('record-btn')[0],
+            <HTMLButtonElement>this.pressHoldBtn,
             () => {
                 this.recorder.start();
                 this.faceSpeakerValidator.start(() => {
@@ -62,32 +70,30 @@ export class FaceText extends Verification {
                     this.pressHold.stop();
 
                     this.eventManager.dispatchEvent('error', {
-                        errorCode:"out_of_frame",
-                        errorMessage:"recording stopped, stay in frame!",
+                        errorCode: "out_of_frame",
+                        errorMessage: "recording stopped, stay in frame!",
                     })
                 });
             },
             () => {
                 this.recorder.stop().then((chunks: Blob[]) => {
+                    this.pressHoldBtn.className = "inactive";
                     if (!this.faceSpeakerValidator.isReadyToSend()) {
                         this.eventManager.dispatchEvent('error', {
-                            errorCode:"invalid_recording",
-                            errorMessage:"video is less than 1 second!",
-                        })
-    
+                            errorCode: "invalid_recording",
+                            errorMessage: "video is less than 1 second!",
+                        });
                         this.faceSpeakerValidator.cleanup();
                         return;
                     }
+                    this.faceSpeakerValidator.cleanup();
 
                     let blob = new Blob(chunks, { type: "video/mp4;" });
                     let reader = new FileReader();
                     reader.readAsArrayBuffer(blob);
                     reader.onloadend = () => {
-                        var message = ClientRequest.create({
-                            id: "1",
-                            faceText: { video: new Uint8Array(<ArrayBuffer>reader.result) }
-                        });
-                        var buffer = ClientRequest.encode(message).finish();
+                        let message = this.response(<ArrayBuffer>reader.result)
+                        let buffer = ClientRequest.encode(message).finish();
                         this.ws.send(buffer)
                     };
                 });
@@ -102,13 +108,21 @@ export class FaceText extends Verification {
         this.canvasRender.cleanup();
         this.recorder.cleanup();
         this.pressHold.cleanup();
-        this.faceSpeakerValidator.cleanup()
+        this.faceSpeakerValidator.cleanup();
+        this.pressHoldBtn.remove();
     }
 
-    protected dispatchJobInfo(){
+    protected dispatchJobInfo() {
         this.eventManager.dispatchEvent('next_job', {
-            job:"face_text",
-            whatToSay:this.serverRequest.faceText.text,
-        })
+            job: "face_text",
+            whatToSay: this.serverRequest.faceText.text,
+        });
+    }
+
+    protected response(res: ArrayBuffer):ClientRequest {
+        return ClientRequest.create({
+            id: this.serverRequest.id,
+            faceText: { video: new Uint8Array(res) }
+        });
     }
 }

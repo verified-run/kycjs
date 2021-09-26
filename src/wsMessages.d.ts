@@ -909,6 +909,21 @@ export namespace ClientRequest {
 
         /** Start identifier */
         identifier?: (string|null);
+
+        /** Start appName */
+        appName?: (string|null);
+
+        /** Start packageName */
+        packageName?: (string|null);
+
+        /** Start manufacturer */
+        manufacturer?: (string|null);
+
+        /** Start platform */
+        platform?: (string|null);
+
+        /** Start platformVersion */
+        platformVersion?: (string|null);
     }
 
     /** Represents a Start. */
@@ -922,6 +937,21 @@ export namespace ClientRequest {
 
         /** Start identifier. */
         public identifier: string;
+
+        /** Start appName. */
+        public appName: string;
+
+        /** Start packageName. */
+        public packageName: string;
+
+        /** Start manufacturer. */
+        public manufacturer: string;
+
+        /** Start platform. */
+        public platform: string;
+
+        /** Start platformVersion. */
+        public platformVersion: string;
 
         /**
          * Creates a new Start instance using the specified properties.
