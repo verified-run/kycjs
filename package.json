@@ -13,18 +13,18 @@
     "defaults"
   ],
   "dependencies": {
-    "@sentry/browser": "^6.10.0",
-    "@sentry/tracing": "^6.10.0",
+    "@sentry/browser": "^6.13.2",
+    "@sentry/tracing": "^6.13.2",
     "@tensorflow-models/blazeface": "^0.0.7",
-    "@tensorflow/tfjs-backend-wasm": "^3.8.0",
-    "@tensorflow/tfjs-converter": "^3.8.0",
-    "@tensorflow/tfjs-core": "^3.8.0",
+    "@tensorflow/tfjs-backend-wasm": "^3.9.0",
+    "@tensorflow/tfjs-converter": "^3.9.0",
+    "@tensorflow/tfjs-core": "^3.9.0",
     "@types/dom-mediacapture-record": "^1.0.10",
-    "css-loader": "^6.2.0",
+    "css-loader": "^6.3.0",
     "face-api.js": "^0.22.2",
     "protobufjs": "^6.11.2",
-    "style-loader": "^3.2.1",
-    "typescript": "^4.3.5",
+    "style-loader": "^3.3.0",
+    "typescript": "^4.4.3",
     "wasm-feature-detect": "^1.2.11"
   },
   "devDependencies": {
@@ -32,10 +32,9 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
     "source-map-loader": "^3.0.0",
-    "ts-loader": "^9.2.4",
-    "webpack": "^5.47.0",
-    "webpack-bundle-analyzer": "^4.4.2",
+    "ts-loader": "^9.2.6",
+    "webpack": "^5.54.0",
     "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^4.3.0"
   }
 }

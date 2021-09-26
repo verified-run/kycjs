@@ -1,24 +1,32 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const path = require('path');
 
 let plugins = [
   new HtmlWebpackPlugin({
     title: 'kyc',
-    // Load a custom template (lodash by default)
     template: './example/index.html',
     favicon: "./example/favicon.png",
   }),
-  new BundleAnalyzerPlugin(),
 ];
 
 
 
 module.exports = {
-  entry: process.env.NODE_ENV == 'development' ? './example/index.ts' : './src/KYC.ts',
-  devServer: {
-    contentBase: './dist',
+  entry: {
+    KYC: './src/KYC.ts',
+    example: {
+      import: './example/index.ts',
+      dependOn: ['KYC'],
+    },
   },
-  plugins: process.env.NODE_ENV == 'development' ? plugins : [],
+
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, "statics"),
+    }
+  },
+  
+  plugins: plugins,
 
   module: {
     rules: [
