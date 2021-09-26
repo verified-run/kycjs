@@ -4,4 +4,4 @@ services:
   ws-server:
     build: .
     ports:
-      - '8020:8020'
+      - '8080:80'
