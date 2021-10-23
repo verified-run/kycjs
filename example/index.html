@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="icon" type="image/png" href="<%= htmlWebpackPlugin.files.favicon %>">
-    <link  rel="shortcut icon">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1"></head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+  <link rel="icon" type="image/png" href="<%= htmlWebpackPlugin.files.favicon %>">
+  <link rel="shortcut icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
+<body>
+  <div id="session-form">
+    <input id="session-key" name="session-key" type="text" value="87654c6e-3c40-4b5e-8d55-7a348bb85a3e">
+    <button id="session-btn">use</button>
+  </div>
+
+  <div id="container">
     <div id="kyc-container" class="row"></div>
     <div v-if="debug" class="col-6" id="debug-canvas"></div>
     <progress id="capture-progress" max="100" value="0">0%</progress>
+    <ul id="text-box"></ul>
+    <ul id="jobs-list"></ul>
+  </div>
+</body>
 
-  </body>
 </html>

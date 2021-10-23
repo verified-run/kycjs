@@ -28,6 +28,10 @@ export class FaceText extends Verification {
     };
 
     async initialize(): Promise<void> {
+        this.eventManager.dispatchEvent('loading', {
+            isLoaded: false,
+        });
+
         this.dispatchJobInfo();
 
         this.Camera = new Camera(this.cameraStream);
@@ -38,6 +42,7 @@ export class FaceText extends Verification {
         };
 
         this.faceDetector = new FaceDetectorBlazeFace(this.cameraStream);
+        await this.faceDetector.Load()
         this.faceFeatureExtractor = new FaceFeatureExtractor(
             this.faceDetector,
             this.canvasBox,
@@ -60,15 +65,18 @@ export class FaceText extends Verification {
         this.pressHoldBtn.innerText = 'record';
         
         this.controlContainer.appendChild(this.pressHoldBtn)
+        this.eventManager.dispatchEvent('loading', {
+            isLoaded: true,
+        });
 
         this.pressHold = new PressHold(
             <HTMLButtonElement>this.pressHoldBtn,
             () => {
                 this.recorder.start();
                 this.faceSpeakerValidator.start(() => {
+                    this.faceSpeakerValidator.cleanup()
                     this.recorder.stop();
                     this.pressHold.stop();
-
                     this.eventManager.dispatchEvent('error', {
                         errorCode: "out_of_frame",
                         errorMessage: "recording stopped, stay in frame!",
@@ -110,6 +118,10 @@ export class FaceText extends Verification {
         this.pressHold.cleanup();
         this.faceSpeakerValidator.cleanup();
         this.pressHoldBtn.remove();
+    }
+
+    isJob(): boolean {
+        return true;
     }
 
     protected dispatchJobInfo() {

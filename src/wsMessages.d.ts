@@ -6,6 +6,9 @@ export interface IServerRequest {
     /** ServerRequest id */
     id?: (string|null);
 
+    /** ServerRequest verified */
+    verified?: (boolean|null);
+
     /** ServerRequest finish */
     finish?: (ServerRequest.IFinish|null);
 
@@ -23,6 +26,9 @@ export interface IServerRequest {
 
     /** ServerRequest error */
     error?: (ServerRequest.IError|null);
+
+    /** ServerRequest jobs */
+    jobs?: (ServerRequest.IJobs|null);
 }
 
 /** Represents a ServerRequest. */
@@ -36,6 +42,9 @@ export class ServerRequest implements IServerRequest {
 
     /** ServerRequest id. */
     public id: string;
+
+    /** ServerRequest verified. */
+    public verified: boolean;
 
     /** ServerRequest finish. */
     public finish?: (ServerRequest.IFinish|null);
@@ -55,8 +64,11 @@ export class ServerRequest implements IServerRequest {
     /** ServerRequest error. */
     public error?: (ServerRequest.IError|null);
 
+    /** ServerRequest jobs. */
+    public jobs?: (ServerRequest.IJobs|null);
+
     /** ServerRequest data. */
-    public data?: ("finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error");
+    public data?: ("finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"jobs");
 
     /**
      * Creates a new ServerRequest instance using the specified properties.
@@ -215,91 +227,193 @@ export namespace ServerRequest {
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of an Identifier. */
-    interface IIdentifier {
+    /** Properties of a Job. */
+    interface IJob {
 
-        /** Identifier identifier */
-        identifier?: (string|null);
+        /** Job id */
+        id?: (string|null);
+
+        /** Job action */
+        action?: (string|null);
+
+        /** Job verified */
+        verified?: (boolean|null);
     }
 
-    /** Represents an Identifier. */
-    class Identifier implements IIdentifier {
+    /** Represents a Job. */
+    class Job implements IJob {
 
         /**
-         * Constructs a new Identifier.
+         * Constructs a new Job.
          * @param [properties] Properties to set
          */
-        constructor(properties?: ServerRequest.IIdentifier);
+        constructor(properties?: ServerRequest.IJob);
 
-        /** Identifier identifier. */
-        public identifier: string;
+        /** Job id. */
+        public id: string;
+
+        /** Job action. */
+        public action: string;
+
+        /** Job verified. */
+        public verified: boolean;
 
         /**
-         * Creates a new Identifier instance using the specified properties.
+         * Creates a new Job instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns Identifier instance
+         * @returns Job instance
          */
-        public static create(properties?: ServerRequest.IIdentifier): ServerRequest.Identifier;
+        public static create(properties?: ServerRequest.IJob): ServerRequest.Job;
 
         /**
-         * Encodes the specified Identifier message. Does not implicitly {@link ServerRequest.Identifier.verify|verify} messages.
-         * @param message Identifier message or plain object to encode
+         * Encodes the specified Job message. Does not implicitly {@link ServerRequest.Job.verify|verify} messages.
+         * @param message Job message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: ServerRequest.IIdentifier, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: ServerRequest.IJob, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified Identifier message, length delimited. Does not implicitly {@link ServerRequest.Identifier.verify|verify} messages.
-         * @param message Identifier message or plain object to encode
+         * Encodes the specified Job message, length delimited. Does not implicitly {@link ServerRequest.Job.verify|verify} messages.
+         * @param message Job message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: ServerRequest.IIdentifier, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: ServerRequest.IJob, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes an Identifier message from the specified reader or buffer.
+         * Decodes a Job message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns Identifier
+         * @returns Job
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ServerRequest.Identifier;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ServerRequest.Job;
 
         /**
-         * Decodes an Identifier message from the specified reader or buffer, length delimited.
+         * Decodes a Job message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns Identifier
+         * @returns Job
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ServerRequest.Identifier;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ServerRequest.Job;
 
         /**
-         * Verifies an Identifier message.
+         * Verifies a Job message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates an Identifier message from a plain object. Also converts values to their respective internal types.
+         * Creates a Job message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns Identifier
+         * @returns Job
          */
-        public static fromObject(object: { [k: string]: any }): ServerRequest.Identifier;
+        public static fromObject(object: { [k: string]: any }): ServerRequest.Job;
 
         /**
-         * Creates a plain object from an Identifier message. Also converts values to other types if specified.
-         * @param message Identifier
+         * Creates a plain object from a Job message. Also converts values to other types if specified.
+         * @param message Job
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: ServerRequest.Identifier, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: ServerRequest.Job, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this Identifier to JSON.
+         * Converts this Job to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a Jobs. */
+    interface IJobs {
+
+        /** Jobs job */
+        job?: (ServerRequest.IJob[]|null);
+    }
+
+    /** Represents a Jobs. */
+    class Jobs implements IJobs {
+
+        /**
+         * Constructs a new Jobs.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: ServerRequest.IJobs);
+
+        /** Jobs job. */
+        public job: ServerRequest.IJob[];
+
+        /**
+         * Creates a new Jobs instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Jobs instance
+         */
+        public static create(properties?: ServerRequest.IJobs): ServerRequest.Jobs;
+
+        /**
+         * Encodes the specified Jobs message. Does not implicitly {@link ServerRequest.Jobs.verify|verify} messages.
+         * @param message Jobs message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: ServerRequest.IJobs, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Jobs message, length delimited. Does not implicitly {@link ServerRequest.Jobs.verify|verify} messages.
+         * @param message Jobs message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: ServerRequest.IJobs, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Jobs message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Jobs
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ServerRequest.Jobs;
+
+        /**
+         * Decodes a Jobs message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Jobs
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ServerRequest.Jobs;
+
+        /**
+         * Verifies a Jobs message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Jobs message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Jobs
+         */
+        public static fromObject(object: { [k: string]: any }): ServerRequest.Jobs;
+
+        /**
+         * Creates a plain object from a Jobs message. Also converts values to other types if specified.
+         * @param message Jobs
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: ServerRequest.Jobs, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Jobs to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

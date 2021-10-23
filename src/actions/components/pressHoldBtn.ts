@@ -35,7 +35,7 @@ export class PressHold {
     }
 
     stop() {
-        this.isPressed = false
+        this.handleRelease()
     }
 
     cleanup() {

@@ -11,27 +11,44 @@ export interface KycEventCaptureProgress {
     job: string,
     progress: number,
 }
-export type eventName = 'error' | 'next_job' | 'capture_progress';
-export type KycEvent = KycEventError | KycEventNextJob | KycEventCaptureProgress;
-export type EventCb = (e: KycEvent) => void;
+export interface KycEventJob {
+    id: string,
+    action: string,
+    verified: boolean,
+}
+export interface KycEventJobs {
+    jobs: KycEventJob[],
+}
+export interface KycEventFinish {}
+
+export interface KycEventLoading {
+    isLoaded: boolean,
+}
+interface EventMap {
+    "error": KycEventError;
+    "next_job": KycEventNextJob;
+    "capture_progress": KycEventCaptureProgress;
+    "jobs": KycEventJobs;
+    "finish": KycEventFinish;
+    "loading": KycEventLoading;
+}
 
 export interface EventList {
-    [key: string]: EventCb;
+    [key: string]: (e: any) => void;
 }
 
 export class EventManager {
     private events: EventList = {};
 
-    public registerEvent(name: eventName, cb: EventCb) {
-        this.events[name] = cb
+    addListener<K extends keyof EventMap>(type: K, listener: (ev: EventMap[K]) => void): void{
+        this.events[type] = listener
     }
 
-    public dispatchEvent(name: eventName, e: KycEvent) {
-        if (!this.events[name]) {
-            console.log(`event ${name} is not registered!`);
+    public dispatchEvent<K extends keyof EventMap>(type: K, e: EventMap[K]) {
+        if (!this.events[type]) {
+            console.log(`event ${type} is not registered!`);
             return;
         }
-        // console.log(`dispatching event: ${name}`);
-        this.events[name](e);
+        this.events[type](e);
     }
 }

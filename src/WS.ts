@@ -18,6 +18,7 @@ export class WS {
   private client: WebSocket
   private events: EventMap = {}
   private sendChannel: Array<string | ArrayBufferLike | Blob | ArrayBufferView> = []
+  private closed = false;
 
   constructor(private identifier: string, private serverAdder?: string) {
     if (!this.serverAdder) {
@@ -52,6 +53,7 @@ export class WS {
       console.log('handler not found: ', message.data)
     };
     this.client.onclose = (event: CloseEvent) => {
+      if(this.closed) return;
       console.log('Socket is closed. Reconnect will be attempted in 1 second.', event.reason);
       setTimeout(() => {
         vm.connect(serverAdder);
@@ -90,14 +92,19 @@ export class WS {
   send(data: string | ArrayBufferLike | Blob | ArrayBufferView) {
     this.sendChannel.push(data);
   }
-
+  
   wsWorker() {
     let send = async () => {
       await this.connectionReady()
       if (this.sendChannel.length > 0)
-        this.client.send(this.sendChannel.pop());
+      this.client.send(this.sendChannel.pop());
       setTimeout(send, 100)
     };
     send()
+  }
+  
+  close() {
+    this.client.close();
+    this.closed = true;
   }
 }

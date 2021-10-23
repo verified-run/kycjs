@@ -14,12 +14,14 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
      * @exports IServerRequest
      * @interface IServerRequest
      * @property {string|null} [id] ServerRequest id
+     * @property {boolean|null} [verified] ServerRequest verified
      * @property {ServerRequest.IFinish|null} [finish] ServerRequest finish
      * @property {ServerRequest.IFaceText|null} [faceText] ServerRequest faceText
      * @property {ServerRequest.IFaceAgreement|null} [faceAgreement] ServerRequest faceAgreement
      * @property {ServerRequest.IFaceMovement|null} [faceMovement] ServerRequest faceMovement
      * @property {ServerRequest.IIdCard|null} [idCard] ServerRequest idCard
      * @property {ServerRequest.IError|null} [error] ServerRequest error
+     * @property {ServerRequest.IJobs|null} [jobs] ServerRequest jobs
      */
 
     /**
@@ -44,6 +46,14 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
      * @instance
      */
     ServerRequest.prototype.id = "";
+
+    /**
+     * ServerRequest verified.
+     * @member {boolean} verified
+     * @memberof ServerRequest
+     * @instance
+     */
+    ServerRequest.prototype.verified = false;
 
     /**
      * ServerRequest finish.
@@ -93,17 +103,25 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
      */
     ServerRequest.prototype.error = null;
 
+    /**
+     * ServerRequest jobs.
+     * @member {ServerRequest.IJobs|null|undefined} jobs
+     * @memberof ServerRequest
+     * @instance
+     */
+    ServerRequest.prototype.jobs = null;
+
     // OneOf field names bound to virtual getters and setters
     let $oneOfFields;
 
     /**
      * ServerRequest data.
-     * @member {"finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|undefined} data
+     * @member {"finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"jobs"|undefined} data
      * @memberof ServerRequest
      * @instance
      */
     Object.defineProperty(ServerRequest.prototype, "data", {
-        get: $util.oneOfGetter($oneOfFields = ["finish", "faceText", "faceAgreement", "faceMovement", "idCard", "error"]),
+        get: $util.oneOfGetter($oneOfFields = ["finish", "faceText", "faceAgreement", "faceMovement", "idCard", "error", "jobs"]),
         set: $util.oneOfSetter($oneOfFields)
     });
 
@@ -133,6 +151,8 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             writer = $Writer.create();
         if (message.id != null && Object.hasOwnProperty.call(message, "id"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+        if (message.verified != null && Object.hasOwnProperty.call(message, "verified"))
+            writer.uint32(/* id 2, wireType 0 =*/16).bool(message.verified);
         if (message.finish != null && Object.hasOwnProperty.call(message, "finish"))
             $root.ServerRequest.Finish.encode(message.finish, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
         if (message.faceText != null && Object.hasOwnProperty.call(message, "faceText"))
@@ -145,6 +165,8 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             $root.ServerRequest.IdCard.encode(message.idCard, writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
         if (message.error != null && Object.hasOwnProperty.call(message, "error"))
             $root.ServerRequest.Error.encode(message.error, writer.uint32(/* id 10, wireType 2 =*/82).fork()).ldelim();
+        if (message.jobs != null && Object.hasOwnProperty.call(message, "jobs"))
+            $root.ServerRequest.Jobs.encode(message.jobs, writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
         return writer;
     };
 
@@ -182,6 +204,9 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             case 1:
                 message.id = reader.string();
                 break;
+            case 2:
+                message.verified = reader.bool();
+                break;
             case 5:
                 message.finish = $root.ServerRequest.Finish.decode(reader, reader.uint32());
                 break;
@@ -199,6 +224,9 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
                 break;
             case 10:
                 message.error = $root.ServerRequest.Error.decode(reader, reader.uint32());
+                break;
+            case 11:
+                message.jobs = $root.ServerRequest.Jobs.decode(reader, reader.uint32());
                 break;
             default:
                 reader.skipType(tag & 7);
@@ -239,6 +267,9 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         if (message.id != null && message.hasOwnProperty("id"))
             if (!$util.isString(message.id))
                 return "id: string expected";
+        if (message.verified != null && message.hasOwnProperty("verified"))
+            if (typeof message.verified !== "boolean")
+                return "verified: boolean expected";
         if (message.finish != null && message.hasOwnProperty("finish")) {
             properties.data = 1;
             {
@@ -297,6 +328,16 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
                     return "error." + error;
             }
         }
+        if (message.jobs != null && message.hasOwnProperty("jobs")) {
+            if (properties.data === 1)
+                return "data: multiple values";
+            properties.data = 1;
+            {
+                let error = $root.ServerRequest.Jobs.verify(message.jobs);
+                if (error)
+                    return "jobs." + error;
+            }
+        }
         return null;
     };
 
@@ -314,6 +355,8 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         let message = new $root.ServerRequest();
         if (object.id != null)
             message.id = String(object.id);
+        if (object.verified != null)
+            message.verified = Boolean(object.verified);
         if (object.finish != null) {
             if (typeof object.finish !== "object")
                 throw TypeError(".ServerRequest.finish: object expected");
@@ -344,6 +387,11 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
                 throw TypeError(".ServerRequest.error: object expected");
             message.error = $root.ServerRequest.Error.fromObject(object.error);
         }
+        if (object.jobs != null) {
+            if (typeof object.jobs !== "object")
+                throw TypeError(".ServerRequest.jobs: object expected");
+            message.jobs = $root.ServerRequest.Jobs.fromObject(object.jobs);
+        }
         return message;
     };
 
@@ -360,10 +408,14 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         if (!options)
             options = {};
         let object = {};
-        if (options.defaults)
+        if (options.defaults) {
             object.id = "";
+            object.verified = false;
+        }
         if (message.id != null && message.hasOwnProperty("id"))
             object.id = message.id;
+        if (message.verified != null && message.hasOwnProperty("verified"))
+            object.verified = message.verified;
         if (message.finish != null && message.hasOwnProperty("finish")) {
             object.finish = $root.ServerRequest.Finish.toObject(message.finish, options);
             if (options.oneofs)
@@ -393,6 +445,11 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             object.error = $root.ServerRequest.Error.toObject(message.error, options);
             if (options.oneofs)
                 object.data = "error";
+        }
+        if (message.jobs != null && message.hasOwnProperty("jobs")) {
+            object.jobs = $root.ServerRequest.Jobs.toObject(message.jobs, options);
+            if (options.oneofs)
+                object.data = "jobs";
         }
         return object;
     };
@@ -568,24 +625,26 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         return Finish;
     })(ServerRequest.Finish || {});
 
-    ServerRequest.Identifier = (function(Identifier) {
+    ServerRequest.Job = (function(Job) {
 
         /**
-         * Properties of an Identifier.
+         * Properties of a Job.
          * @memberof ServerRequest
-         * @interface IIdentifier
-         * @property {string|null} [identifier] Identifier identifier
+         * @interface IJob
+         * @property {string|null} [id] Job id
+         * @property {string|null} [action] Job action
+         * @property {boolean|null} [verified] Job verified
          */
 
         /**
-         * Constructs a new Identifier.
+         * Constructs a new Job.
          * @memberof ServerRequest
-         * @classdesc Represents an Identifier.
-         * @implements IIdentifier
+         * @classdesc Represents a Job.
+         * @implements IJob
          * @constructor
-         * @param {ServerRequest.IIdentifier=} [properties] Properties to set
+         * @param {ServerRequest.IJob=} [properties] Properties to set
          */
-        function Identifier(properties) {
+        function Job(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -593,75 +652,101 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         }
 
         /**
-         * Identifier identifier.
-         * @member {string} identifier
-         * @memberof ServerRequest.Identifier
+         * Job id.
+         * @member {string} id
+         * @memberof ServerRequest.Job
          * @instance
          */
-        Identifier.prototype.identifier = "";
+        Job.prototype.id = "";
 
         /**
-         * Creates a new Identifier instance using the specified properties.
-         * @function create
-         * @memberof ServerRequest.Identifier
-         * @static
-         * @param {ServerRequest.IIdentifier=} [properties] Properties to set
-         * @returns {ServerRequest.Identifier} Identifier instance
+         * Job action.
+         * @member {string} action
+         * @memberof ServerRequest.Job
+         * @instance
          */
-        Identifier.create = function create(properties) {
-            return new Identifier(properties);
+        Job.prototype.action = "";
+
+        /**
+         * Job verified.
+         * @member {boolean} verified
+         * @memberof ServerRequest.Job
+         * @instance
+         */
+        Job.prototype.verified = false;
+
+        /**
+         * Creates a new Job instance using the specified properties.
+         * @function create
+         * @memberof ServerRequest.Job
+         * @static
+         * @param {ServerRequest.IJob=} [properties] Properties to set
+         * @returns {ServerRequest.Job} Job instance
+         */
+        Job.create = function create(properties) {
+            return new Job(properties);
         };
 
         /**
-         * Encodes the specified Identifier message. Does not implicitly {@link ServerRequest.Identifier.verify|verify} messages.
+         * Encodes the specified Job message. Does not implicitly {@link ServerRequest.Job.verify|verify} messages.
          * @function encode
-         * @memberof ServerRequest.Identifier
+         * @memberof ServerRequest.Job
          * @static
-         * @param {ServerRequest.IIdentifier} message Identifier message or plain object to encode
+         * @param {ServerRequest.IJob} message Job message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        Identifier.encode = function encode(message, writer) {
+        Job.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.identifier != null && Object.hasOwnProperty.call(message, "identifier"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.identifier);
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            if (message.action != null && Object.hasOwnProperty.call(message, "action"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.action);
+            if (message.verified != null && Object.hasOwnProperty.call(message, "verified"))
+                writer.uint32(/* id 3, wireType 0 =*/24).bool(message.verified);
             return writer;
         };
 
         /**
-         * Encodes the specified Identifier message, length delimited. Does not implicitly {@link ServerRequest.Identifier.verify|verify} messages.
+         * Encodes the specified Job message, length delimited. Does not implicitly {@link ServerRequest.Job.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof ServerRequest.Identifier
+         * @memberof ServerRequest.Job
          * @static
-         * @param {ServerRequest.IIdentifier} message Identifier message or plain object to encode
+         * @param {ServerRequest.IJob} message Job message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        Identifier.encodeDelimited = function encodeDelimited(message, writer) {
+        Job.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes an Identifier message from the specified reader or buffer.
+         * Decodes a Job message from the specified reader or buffer.
          * @function decode
-         * @memberof ServerRequest.Identifier
+         * @memberof ServerRequest.Job
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {ServerRequest.Identifier} Identifier
+         * @returns {ServerRequest.Job} Job
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        Identifier.decode = function decode(reader, length) {
+        Job.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ServerRequest.Identifier();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ServerRequest.Job();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.identifier = reader.string();
+                    message.id = reader.string();
+                    break;
+                case 2:
+                    message.action = reader.string();
+                    break;
+                case 3:
+                    message.verified = reader.bool();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -672,88 +757,313 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         };
 
         /**
-         * Decodes an Identifier message from the specified reader or buffer, length delimited.
+         * Decodes a Job message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof ServerRequest.Identifier
+         * @memberof ServerRequest.Job
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {ServerRequest.Identifier} Identifier
+         * @returns {ServerRequest.Job} Job
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        Identifier.decodeDelimited = function decodeDelimited(reader) {
+        Job.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies an Identifier message.
+         * Verifies a Job message.
          * @function verify
-         * @memberof ServerRequest.Identifier
+         * @memberof ServerRequest.Job
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        Identifier.verify = function verify(message) {
+        Job.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.identifier != null && message.hasOwnProperty("identifier"))
-                if (!$util.isString(message.identifier))
-                    return "identifier: string expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            if (message.action != null && message.hasOwnProperty("action"))
+                if (!$util.isString(message.action))
+                    return "action: string expected";
+            if (message.verified != null && message.hasOwnProperty("verified"))
+                if (typeof message.verified !== "boolean")
+                    return "verified: boolean expected";
             return null;
         };
 
         /**
-         * Creates an Identifier message from a plain object. Also converts values to their respective internal types.
+         * Creates a Job message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof ServerRequest.Identifier
+         * @memberof ServerRequest.Job
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {ServerRequest.Identifier} Identifier
+         * @returns {ServerRequest.Job} Job
          */
-        Identifier.fromObject = function fromObject(object) {
-            if (object instanceof $root.ServerRequest.Identifier)
+        Job.fromObject = function fromObject(object) {
+            if (object instanceof $root.ServerRequest.Job)
                 return object;
-            let message = new $root.ServerRequest.Identifier();
-            if (object.identifier != null)
-                message.identifier = String(object.identifier);
+            let message = new $root.ServerRequest.Job();
+            if (object.id != null)
+                message.id = String(object.id);
+            if (object.action != null)
+                message.action = String(object.action);
+            if (object.verified != null)
+                message.verified = Boolean(object.verified);
             return message;
         };
 
         /**
-         * Creates a plain object from an Identifier message. Also converts values to other types if specified.
+         * Creates a plain object from a Job message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof ServerRequest.Identifier
+         * @memberof ServerRequest.Job
          * @static
-         * @param {ServerRequest.Identifier} message Identifier
+         * @param {ServerRequest.Job} message Job
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        Identifier.toObject = function toObject(message, options) {
+        Job.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             let object = {};
-            if (options.defaults)
-                object.identifier = "";
-            if (message.identifier != null && message.hasOwnProperty("identifier"))
-                object.identifier = message.identifier;
+            if (options.defaults) {
+                object.id = "";
+                object.action = "";
+                object.verified = false;
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.action != null && message.hasOwnProperty("action"))
+                object.action = message.action;
+            if (message.verified != null && message.hasOwnProperty("verified"))
+                object.verified = message.verified;
             return object;
         };
 
         /**
-         * Converts this Identifier to JSON.
+         * Converts this Job to JSON.
          * @function toJSON
-         * @memberof ServerRequest.Identifier
+         * @memberof ServerRequest.Job
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        Identifier.prototype.toJSON = function toJSON() {
+        Job.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return Identifier;
-    })(ServerRequest.Identifier || {});
+        return Job;
+    })(ServerRequest.Job || {});
+
+    ServerRequest.Jobs = (function(Jobs) {
+
+        /**
+         * Properties of a Jobs.
+         * @memberof ServerRequest
+         * @interface IJobs
+         * @property {Array.<ServerRequest.IJob>|null} [job] Jobs job
+         */
+
+        /**
+         * Constructs a new Jobs.
+         * @memberof ServerRequest
+         * @classdesc Represents a Jobs.
+         * @implements IJobs
+         * @constructor
+         * @param {ServerRequest.IJobs=} [properties] Properties to set
+         */
+        function Jobs(properties) {
+            this.job = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Jobs job.
+         * @member {Array.<ServerRequest.IJob>} job
+         * @memberof ServerRequest.Jobs
+         * @instance
+         */
+        Jobs.prototype.job = $util.emptyArray;
+
+        /**
+         * Creates a new Jobs instance using the specified properties.
+         * @function create
+         * @memberof ServerRequest.Jobs
+         * @static
+         * @param {ServerRequest.IJobs=} [properties] Properties to set
+         * @returns {ServerRequest.Jobs} Jobs instance
+         */
+        Jobs.create = function create(properties) {
+            return new Jobs(properties);
+        };
+
+        /**
+         * Encodes the specified Jobs message. Does not implicitly {@link ServerRequest.Jobs.verify|verify} messages.
+         * @function encode
+         * @memberof ServerRequest.Jobs
+         * @static
+         * @param {ServerRequest.IJobs} message Jobs message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Jobs.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.job != null && message.job.length)
+                for (let i = 0; i < message.job.length; ++i)
+                    $root.ServerRequest.Job.encode(message.job[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Jobs message, length delimited. Does not implicitly {@link ServerRequest.Jobs.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof ServerRequest.Jobs
+         * @static
+         * @param {ServerRequest.IJobs} message Jobs message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Jobs.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Jobs message from the specified reader or buffer.
+         * @function decode
+         * @memberof ServerRequest.Jobs
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {ServerRequest.Jobs} Jobs
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Jobs.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ServerRequest.Jobs();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.job && message.job.length))
+                        message.job = [];
+                    message.job.push($root.ServerRequest.Job.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Jobs message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof ServerRequest.Jobs
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {ServerRequest.Jobs} Jobs
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Jobs.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Jobs message.
+         * @function verify
+         * @memberof ServerRequest.Jobs
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Jobs.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.job != null && message.hasOwnProperty("job")) {
+                if (!Array.isArray(message.job))
+                    return "job: array expected";
+                for (let i = 0; i < message.job.length; ++i) {
+                    let error = $root.ServerRequest.Job.verify(message.job[i]);
+                    if (error)
+                        return "job." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a Jobs message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof ServerRequest.Jobs
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {ServerRequest.Jobs} Jobs
+         */
+        Jobs.fromObject = function fromObject(object) {
+            if (object instanceof $root.ServerRequest.Jobs)
+                return object;
+            let message = new $root.ServerRequest.Jobs();
+            if (object.job) {
+                if (!Array.isArray(object.job))
+                    throw TypeError(".ServerRequest.Jobs.job: array expected");
+                message.job = [];
+                for (let i = 0; i < object.job.length; ++i) {
+                    if (typeof object.job[i] !== "object")
+                        throw TypeError(".ServerRequest.Jobs.job: object expected");
+                    message.job[i] = $root.ServerRequest.Job.fromObject(object.job[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Jobs message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof ServerRequest.Jobs
+         * @static
+         * @param {ServerRequest.Jobs} message Jobs
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Jobs.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults)
+                object.job = [];
+            if (message.job && message.job.length) {
+                object.job = [];
+                for (let j = 0; j < message.job.length; ++j)
+                    object.job[j] = $root.ServerRequest.Job.toObject(message.job[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this Jobs to JSON.
+         * @function toJSON
+         * @memberof ServerRequest.Jobs
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Jobs.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Jobs;
+    })(ServerRequest.Jobs || {});
 
     ServerRequest.FaceText = (function(FaceText) {
 

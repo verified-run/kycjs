@@ -1,29 +1,64 @@
-import { KycEventCaptureProgress, KycEventError, KycEventNextJob } from '../src/EventManager'
 import { KYC } from '../src/KYC'
 import "./index.css";
 
-let container = <HTMLElement>document.getElementById("kyc-container")
+let sessionBtn = <HTMLButtonElement>document.getElementById("session-btn")
 
-let kyc = new KYC(
-    "87654c6e-3c40-4b5e-8d55-7a348bb85a3e",
-    container,
-)
+sessionBtn.onclick = () => {
 
-kyc.registerEvent('error', (e: KycEventError) => {
-    alert(`${e.errorCode} => ${e.errorMessage}`);
-})
-kyc.registerEvent('next_job', (e: KycEventNextJob) => {
-    switch(e.job){
-        case "face_agreement":
-        case "face_text":
-            alert(`${e.job} => plz say "${e.whatToSay}"`);
+    let sessionKey = (<HTMLInputElement>document.getElementById("session-key")).value
+
+    let container = <HTMLElement>document.getElementById("kyc-container")
+
+    let kyc = new KYC(
+        sessionKey,
+        container,
+    )
+    
+    
+
+    kyc.eventManager.addListener('error', (e) => {
+        alert(`${e.errorCode} => ${e.errorMessage}`);
+    })
+    kyc.eventManager.addListener('next_job', (e) => {
+
+        let textBox = <HTMLProgressElement>document.getElementById("text-box");
+
+        switch (e.job) {
+            case "face_agreement":
+            case "face_text":
+                textBox.innerText = `${e.job} => plz say "${e.whatToSay}"`
+                return;
+            case "id_card":
+                textBox.innerText = `${e.job} => hold your id card in front of camera`
+                return;
+        }
+    })
+    kyc.eventManager.addListener('capture_progress', (e) => {
+        let x = <HTMLProgressElement>document.getElementById("capture-progress");
+        x.value = e.progress
+    })
+    kyc.eventManager.addListener('jobs', (e) => {
+        let x = <HTMLProgressElement>document.getElementById("jobs-list");
+        while (x.lastElementChild) x.removeChild(x.lastElementChild);
+        e.jobs.forEach((item) => {
+            let liEl = document.createElement('li');
+            liEl.innerText = `${item.id}. ${item.action}:${item.verified}`;
+            x.appendChild(liEl);
+        })
+    })
+
+    kyc.eventManager.addListener('loading', (e) => {
+        let container = <HTMLProgressElement>document.getElementById("container");
+
+        if (!e.isLoaded) {
+            container.classList.add('loading');
             return;
-        case "id_card":
-            alert(`${e.job} => hold your id card in front of camera`);
-            return;
-    }
-})
-kyc.registerEvent('capture_progress', (e: KycEventCaptureProgress) => {
-    let x = <HTMLProgressElement>document.getElementById("capture-progress");
-    x.value = e.progress
-})
+        }
+        container.classList.remove('loading');
+    })
+    kyc.eventManager.addListener('finish', (e) => {
+        alert('finish');
+        kyc.cleanup()
+    })
+
+}

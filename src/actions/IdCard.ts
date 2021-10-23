@@ -22,8 +22,11 @@ export class IdCard extends Verification {
     };
 
     async initialize(): Promise<void> {
-        this.dispatchJobInfo();
+        this.eventManager.dispatchEvent('loading', {
+            isLoaded: false,
+        });
 
+        this.dispatchJobInfo();
         this.Camera = new Camera(this.cameraStream);
         await this.Camera.setup("environment");
 
@@ -33,6 +36,7 @@ export class IdCard extends Verification {
         };
 
         this.faceDetector = new FaceDetectorBlazeFace(this.cameraStream);
+        await this.faceDetector.Load()
         this.faceFeatureExtractor = new FaceFeatureExtractor(
             this.faceDetector,
             this.canvasBox,
@@ -48,6 +52,9 @@ export class IdCard extends Verification {
                     && !faceInfo.outOfView);
             }
         );
+        this.eventManager.dispatchEvent('loading', {
+            isLoaded: true,
+        });
 
         let validCounter = 0;
         this.faceSpeakerValidator.start(
@@ -88,6 +95,10 @@ export class IdCard extends Verification {
         this.faceDetector.cleanup();
         this.faceFeatureExtractor.cleanup();
         this.faceSpeakerValidator.cleanup();
+    }
+
+    isJob(): boolean {
+        return true;
     }
 
     protected dispatchJobInfo() {

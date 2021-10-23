@@ -6,6 +6,9 @@ import { WS } from "./WS";
 import { ServerRequest } from "./wsMessages";
 import { FaceAgreement } from "./actions/FaceAgreement";
 import { EventManager } from "./EventManager";
+import { Jobs } from "./actions/Jobs";
+import { Finish } from "./actions/Finish";
+import { Error } from "./actions/Error";
 
 
 export class VerificationManager {
@@ -14,8 +17,11 @@ export class VerificationManager {
         "faceAgreement": FaceAgreement,
         "faceText": FaceText,
         "idCard": IdCard,
+        "jobs": Jobs,
+        "finish": Finish,
+        "error": Error,
     }
-    
+
     private currentAction: Verification | null = null;
 
     constructor(
@@ -32,15 +38,23 @@ export class VerificationManager {
     }
 
     execute(actionName: string, serverRequest: ServerRequest) {
-        if (this.currentAction) this.currentAction.cleanup()
-        this.currentAction = new this.actions[actionName](
+        
+        if (this.currentAction && serverRequest.id == this.currentAction.getJobId()) {
+            console.log('same job requested, no change needed.');
+            return;
+        };
+
+        let action = new this.actions[actionName](
             serverRequest,
             this.ws,
             this.cameraStream,
             this.controlContainer,
             this.eventManager
         )
-
-        this.currentAction.initialize()
+        if (action.isJob()) {
+            if (this.currentAction) this.currentAction.cleanup();
+            this.currentAction = action;
+        }
+        action.initialize();
     }
 }

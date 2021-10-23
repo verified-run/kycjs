@@ -8,28 +8,27 @@ import wasmSimdThreadedPath from '@tensorflow/tfjs-backend-wasm/dist/tfjs-backen
 import wasmPath from '@tensorflow/tfjs-backend-wasm/dist/tfjs-backend-wasm.wasm';
 
 export const minPredictTime = 100;
-
+let model: BlazeFaceModel;
 export class FaceDetectorBlazeFace implements FaceDetectorInterface {
-    private model!: BlazeFaceModel;
     private isActive = false;
     private currentFaceLocation: NormalizedFace | null;
     ;
 
-    constructor(private video: VideoElement) {
-        this.Load()
-    }
+    constructor(private video: VideoElement) {}
 
     async Load(): Promise<void> {
-        tfjsWasm.setWasmPaths({
-            'tfjs-backend-wasm.wasm': wasmPath,
-            'tfjs-backend-wasm-simd.wasm': wasmSimdPath,
-            'tfjs-backend-wasm-threaded-simd.wasm': wasmSimdThreadedPath
-        });
-        await tf.ready()
-        tf.setBackend("wasm");
-        this.model = await blazeFace({
-            modelUrl: "/blazeface/model.json",
-        });
+        if(!model){
+            tfjsWasm.setWasmPaths({
+                'tfjs-backend-wasm.wasm': wasmPath,
+                'tfjs-backend-wasm-simd.wasm': wasmSimdPath,
+                'tfjs-backend-wasm-threaded-simd.wasm': wasmSimdThreadedPath
+            });
+            await tf.ready()
+            tf.setBackend("wasm");
+            model = await blazeFace({
+                modelUrl: "/blazeface/model.json",
+            });
+        }
         this.isActive = true;
         this.predictLoop();
     }
@@ -37,7 +36,7 @@ export class FaceDetectorBlazeFace implements FaceDetectorInterface {
     private async predictLoop() {
         if (!this.isActive) return;
 
-        const predictions = await this.model.estimateFaces(this.video, false);
+        const predictions = await model.estimateFaces(this.video, false);
 
         this.currentFaceLocation = <NormalizedFace>predictions[0] || null
         setTimeout(() => this.predictLoop(), minPredictTime);

@@ -14,6 +14,7 @@ export interface VerificationList {
 export abstract class Verification {
     abstract initialize(): void;
     abstract cleanup(): void;
+    abstract isJob(): boolean;
 
     constructor(
         protected serverRequest: ServerRequest,
@@ -22,4 +23,8 @@ export abstract class Verification {
         protected controlContainer: HTMLElement,
         protected eventManager: EventManager
     ) { }
+    
+    getJobId(): string { 
+        return this.serverRequest.id;
+    }
 }
