@@ -29,6 +29,9 @@ export interface IServerRequest {
 
     /** ServerRequest jobs */
     jobs?: (ServerRequest.IJobs|null);
+
+    /** ServerRequest pong */
+    pong?: (ServerRequest.IPong|null);
 }
 
 /** Represents a ServerRequest. */
@@ -67,8 +70,11 @@ export class ServerRequest implements IServerRequest {
     /** ServerRequest jobs. */
     public jobs?: (ServerRequest.IJobs|null);
 
+    /** ServerRequest pong. */
+    public pong?: (ServerRequest.IPong|null);
+
     /** ServerRequest data. */
-    public data?: ("finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"jobs");
+    public data?: ("finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"jobs"|"pong");
 
     /**
      * Creates a new ServerRequest instance using the specified properties.
@@ -885,6 +891,180 @@ export namespace ServerRequest {
          */
         public toJSON(): { [k: string]: any };
     }
+
+    /** Properties of a Pong. */
+    interface IPong {
+    }
+
+    /** Represents a Pong. */
+    class Pong implements IPong {
+
+        /**
+         * Constructs a new Pong.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: ServerRequest.IPong);
+
+        /**
+         * Creates a new Pong instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Pong instance
+         */
+        public static create(properties?: ServerRequest.IPong): ServerRequest.Pong;
+
+        /**
+         * Encodes the specified Pong message. Does not implicitly {@link ServerRequest.Pong.verify|verify} messages.
+         * @param message Pong message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: ServerRequest.IPong, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Pong message, length delimited. Does not implicitly {@link ServerRequest.Pong.verify|verify} messages.
+         * @param message Pong message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: ServerRequest.IPong, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Pong message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Pong
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ServerRequest.Pong;
+
+        /**
+         * Decodes a Pong message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Pong
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ServerRequest.Pong;
+
+        /**
+         * Verifies a Pong message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Pong message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Pong
+         */
+        public static fromObject(object: { [k: string]: any }): ServerRequest.Pong;
+
+        /**
+         * Creates a plain object from a Pong message. Also converts values to other types if specified.
+         * @param message Pong
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: ServerRequest.Pong, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Pong to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+}
+
+/** Properties of a ServerRequestList. */
+export interface IServerRequestList {
+
+    /** ServerRequestList serverRequests */
+    serverRequests?: (IServerRequest[]|null);
+}
+
+/** Represents a ServerRequestList. */
+export class ServerRequestList implements IServerRequestList {
+
+    /**
+     * Constructs a new ServerRequestList.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IServerRequestList);
+
+    /** ServerRequestList serverRequests. */
+    public serverRequests: IServerRequest[];
+
+    /**
+     * Creates a new ServerRequestList instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns ServerRequestList instance
+     */
+    public static create(properties?: IServerRequestList): ServerRequestList;
+
+    /**
+     * Encodes the specified ServerRequestList message. Does not implicitly {@link ServerRequestList.verify|verify} messages.
+     * @param message ServerRequestList message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IServerRequestList, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified ServerRequestList message, length delimited. Does not implicitly {@link ServerRequestList.verify|verify} messages.
+     * @param message ServerRequestList message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IServerRequestList, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a ServerRequestList message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns ServerRequestList
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ServerRequestList;
+
+    /**
+     * Decodes a ServerRequestList message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns ServerRequestList
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ServerRequestList;
+
+    /**
+     * Verifies a ServerRequestList message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a ServerRequestList message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns ServerRequestList
+     */
+    public static fromObject(object: { [k: string]: any }): ServerRequestList;
+
+    /**
+     * Creates a plain object from a ServerRequestList message. Also converts values to other types if specified.
+     * @param message ServerRequestList
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: ServerRequestList, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this ServerRequestList to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
 }
 
 /** Properties of a ClientRequest. */
@@ -910,6 +1090,9 @@ export interface IClientRequest {
 
     /** ClientRequest error */
     error?: (ClientRequest.IError|null);
+
+    /** ClientRequest ping */
+    ping?: (ClientRequest.IPing|null);
 }
 
 /** Represents a ClientRequest. */
@@ -942,8 +1125,11 @@ export class ClientRequest implements IClientRequest {
     /** ClientRequest error. */
     public error?: (ClientRequest.IError|null);
 
+    /** ClientRequest ping. */
+    public ping?: (ClientRequest.IPing|null);
+
     /** ClientRequest data. */
-    public data?: ("start"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error");
+    public data?: ("start"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"ping");
 
     /**
      * Creates a new ClientRequest instance using the specified properties.
@@ -1703,6 +1889,90 @@ export namespace ClientRequest {
 
         /**
          * Converts this Error to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a Ping. */
+    interface IPing {
+    }
+
+    /** Represents a Ping. */
+    class Ping implements IPing {
+
+        /**
+         * Constructs a new Ping.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: ClientRequest.IPing);
+
+        /**
+         * Creates a new Ping instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Ping instance
+         */
+        public static create(properties?: ClientRequest.IPing): ClientRequest.Ping;
+
+        /**
+         * Encodes the specified Ping message. Does not implicitly {@link ClientRequest.Ping.verify|verify} messages.
+         * @param message Ping message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: ClientRequest.IPing, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Ping message, length delimited. Does not implicitly {@link ClientRequest.Ping.verify|verify} messages.
+         * @param message Ping message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: ClientRequest.IPing, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Ping message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Ping
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ClientRequest.Ping;
+
+        /**
+         * Decodes a Ping message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Ping
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ClientRequest.Ping;
+
+        /**
+         * Verifies a Ping message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Ping message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Ping
+         */
+        public static fromObject(object: { [k: string]: any }): ClientRequest.Ping;
+
+        /**
+         * Creates a plain object from a Ping message. Also converts values to other types if specified.
+         * @param message Ping
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: ClientRequest.Ping, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Ping to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

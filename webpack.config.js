@@ -5,6 +5,7 @@ let plugins = [
   new HtmlWebpackPlugin({
     title: 'kyc',
     template: './example/index.html',
+    publicPath: '/demo/',
     favicon: "./example/favicon.png",
   }),
 ];
@@ -27,7 +28,9 @@ module.exports = {
   },
   
   plugins: plugins,
-
+  output: {
+    filename: '[name].[contenthash].js',
+  },
   module: {
     rules: [
       {

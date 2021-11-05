@@ -1,11 +1,17 @@
+import "./sentry";
 import { KYC } from '../src/KYC'
 import "./index.css";
 
 let sessionBtn = <HTMLButtonElement>document.getElementById("session-btn")
+let sessionInput = <HTMLInputElement>document.getElementById("session-key");
 
+let hash = (new URL(document.URL)).hash;
+
+if (hash) {
+    sessionInput.value = hash.substring(1)
+}
 sessionBtn.onclick = () => {
-
-    let sessionKey = (<HTMLInputElement>document.getElementById("session-key")).value
+    let sessionKey = sessionInput.value
 
     let container = <HTMLElement>document.getElementById("kyc-container")
 
@@ -13,12 +19,11 @@ sessionBtn.onclick = () => {
         sessionKey,
         container,
     )
-    
-    
 
     kyc.eventManager.addListener('error', (e) => {
         alert(`${e.errorCode} => ${e.errorMessage}`);
     })
+    
     kyc.eventManager.addListener('next_job', (e) => {
 
         let textBox = <HTMLProgressElement>document.getElementById("text-box");

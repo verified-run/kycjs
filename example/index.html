@@ -13,16 +13,16 @@
 
 <body>
   <div id="session-form">
-    <input id="session-key" name="session-key" type="text" value="87654c6e-3c40-4b5e-8d55-7a348bb85a3e">
+    <input id="session-key" name="session-key" type="text" placeholder="F8751D81-C4AD-471E-A0F5-CC8C48677A55">
     <button id="session-btn">use</button>
   </div>
 
   <div id="container">
-    <div id="kyc-container" class="row"></div>
-    <div v-if="debug" class="col-6" id="debug-canvas"></div>
     <progress id="capture-progress" max="100" value="0">0%</progress>
     <ul id="text-box"></ul>
+    <div id="kyc-container" class="row"></div>
     <ul id="jobs-list"></ul>
+    <div v-if="debug" class="col-6" id="debug-canvas"></div>
   </div>
 </body>
 

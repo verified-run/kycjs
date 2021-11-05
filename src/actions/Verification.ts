@@ -4,7 +4,7 @@ import { WS } from "../WS"
 import { ServerRequest } from "../wsMessages"
 
 type ValidatorConstructor = {
-    new(serverRequest: ServerRequest, ws: WS, cameraStream: VideoElement, controlContainer: HTMLElement, eventManager: EventManager): Verification;
+    new(serverRequest: ServerRequest, ws: WS, container: HTMLElement, eventManager: EventManager): Verification;
 }
 
 export interface VerificationList {
@@ -16,15 +16,24 @@ export abstract class Verification {
     abstract cleanup(): void;
     abstract isJob(): boolean;
 
+
     constructor(
         protected serverRequest: ServerRequest,
         protected ws: WS,
-        protected cameraStream: VideoElement,
-        protected controlContainer: HTMLElement,
+        protected container: HTMLElement,
         protected eventManager: EventManager
-    ) { }
-    
-    getJobId(): string { 
+    ) {
+        this.draw()
+    }
+
+    getJobId(): string {
         return this.serverRequest.id;
+    }
+
+    protected draw(): void {
+
+    }
+    public retry(): void {
+
     }
 }

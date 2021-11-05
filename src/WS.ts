@@ -19,6 +19,7 @@ export class WS {
   private events: EventMap = {}
   private sendChannel: Array<string | ArrayBufferLike | Blob | ArrayBufferView> = []
   private closed = false;
+  private pingInterval: NodeJS.Timer;
 
   constructor(private identifier: string, private serverAdder?: string) {
     if (!this.serverAdder) {
@@ -26,7 +27,7 @@ export class WS {
       this.serverAdder = `${protocol}//${window.location.host}/ws`
     }
   }
-  start(){
+  start() {
     this.connect(this.serverAdder)
   }
 
@@ -45,6 +46,7 @@ export class WS {
     };
     this.client.onmessage = (event: MessageEvent) => {
       let message = ServerRequest.decode(new Uint8Array(event.data));
+      if (message.data == 'pong') return;
       if (vm.events[message.data]) {
         console.log('handling: ', message.data)
         vm.events[message.data](message)
@@ -52,8 +54,22 @@ export class WS {
       }
       console.log('handler not found: ', message.data)
     };
+
+    this.pingInterval = setInterval(
+      () => {
+        this.send(
+          ClientRequest.encode(
+            ClientRequest.create({ ping: {} })
+          ).finish()
+        );
+      },
+      10000
+    );
+
     this.client.onclose = (event: CloseEvent) => {
-      if(this.closed) return;
+      if (this.closed) return;
+      clearInterval(this.pingInterval);
+      this.pingInterval = null;
       console.log('Socket is closed. Reconnect will be attempted in 1 second.', event.reason);
       setTimeout(() => {
         vm.connect(serverAdder);
@@ -92,17 +108,17 @@ export class WS {
   send(data: string | ArrayBufferLike | Blob | ArrayBufferView) {
     this.sendChannel.push(data);
   }
-  
+
   wsWorker() {
     let send = async () => {
       await this.connectionReady()
       if (this.sendChannel.length > 0)
-      this.client.send(this.sendChannel.pop());
+        this.client.send(this.sendChannel.pop());
       setTimeout(send, 100)
     };
     send()
   }
-  
+
   close() {
     this.client.close();
     this.closed = true;

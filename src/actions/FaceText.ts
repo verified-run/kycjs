@@ -8,6 +8,7 @@ import { Recorder } from "./components/Recorder";
 import { PressHold } from "./components/pressHoldBtn";
 import { ClientRequest } from "../wsMessages";
 import { FaceSpeakerValidator } from "./components/FaceSpeakerValidator";
+import { VideoElement } from "../types";
 
 export class FaceText extends Verification {
     protected Camera: Camera;
@@ -18,6 +19,9 @@ export class FaceText extends Verification {
     protected recorder: Recorder;
     protected pressHoldBtn: HTMLButtonElement;
     protected pressHold: PressHold;
+    protected cameraStream: VideoElement;
+    protected controlContainer: HTMLElement;
+
     protected canvasBox = {
         width: 150,
         height: 200,
@@ -26,6 +30,23 @@ export class FaceText extends Verification {
         width: 0,
         height: 0,
     };
+
+    public draw(): void {
+        this.cameraStream = <VideoElement>document.createElement("video");
+        this.cameraStream.autoplay = true;
+        this.cameraStream.muted = true;
+        this.cameraStream.controls = false;
+        this.cameraStream.controls = false;
+        this.cameraStream.playsInline = true;
+        this.cameraStream.className = "camera-stream"
+        this.container.appendChild(this.cameraStream)
+        this.controlContainer = <HTMLDivElement>document.createElement("div");
+        this.controlContainer.className = "action-box"
+        this.container.appendChild(this.controlContainer)
+        this.pressHoldBtn = <HTMLButtonElement>document.createElement("button");
+        this.pressHoldBtn.innerText = 'record';
+        this.controlContainer.appendChild(this.pressHoldBtn)
+    }
 
     async initialize(): Promise<void> {
         this.eventManager.dispatchEvent('loading', {
@@ -61,10 +82,6 @@ export class FaceText extends Verification {
         stream.addTrack(this.Camera.getStream().getAudioTracks()[0]);
         this.recorder = new Recorder(stream);
 
-        this.pressHoldBtn = <HTMLButtonElement>document.createElement("button");
-        this.pressHoldBtn.innerText = 'record';
-        
-        this.controlContainer.appendChild(this.pressHoldBtn)
         this.eventManager.dispatchEvent('loading', {
             isLoaded: true,
         });
@@ -118,6 +135,8 @@ export class FaceText extends Verification {
         this.pressHold.cleanup();
         this.faceSpeakerValidator.cleanup();
         this.pressHoldBtn.remove();
+        this.cameraStream.remove()
+        this.controlContainer.remove();
     }
 
     isJob(): boolean {
@@ -131,7 +150,7 @@ export class FaceText extends Verification {
         });
     }
 
-    protected response(res: ArrayBuffer):ClientRequest {
+    protected response(res: ArrayBuffer): ClientRequest {
         return ClientRequest.create({
             id: this.serverRequest.id,
             faceText: { video: new Uint8Array(res) }

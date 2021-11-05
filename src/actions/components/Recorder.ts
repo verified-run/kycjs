@@ -29,6 +29,7 @@ export class Recorder {
 
 
     async stop(): Promise<Blob[]> {
+        if (this.mediaRecorder.state === 'inactive') return;
         if (this.recordStopTimeout) {
             clearTimeout(this.recordStopTimeout);
             this.recordStopTimeout = null;
@@ -46,7 +47,6 @@ export class Recorder {
         return this.mediaRecorder.state === 'recording';
     }
     cleanup() {
-        if (this.mediaRecorder.state !== 'inactive')
-            this.stop();
+        this.stop();
     }
 }

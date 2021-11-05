@@ -5,13 +5,15 @@ import { FaceFeatureExtractor } from "./components/FaceFeatureExtractor";
 import { FaceDetectorInterface } from "./components/FaceDetectorInterface";
 import { ClientRequest } from "../wsMessages";
 import { FaceSpeakerValidator } from "./components/FaceSpeakerValidator";
-import { ImageInfo } from "../types";
+import { ImageInfo, VideoElement } from "../types";
 
 export class IdCard extends Verification {
     protected Camera: Camera;
     protected faceDetector: FaceDetectorInterface;
     protected faceFeatureExtractor: FaceFeatureExtractor;
     protected faceSpeakerValidator: FaceSpeakerValidator;
+    protected cameraStream: VideoElement;
+    protected controlContainer: HTMLElement;
     protected canvasBox = {
         width: 150,
         height: 200,
@@ -20,6 +22,20 @@ export class IdCard extends Verification {
         width: 0,
         height: 0,
     };
+
+    public draw(): void {
+        this.cameraStream = <VideoElement>document.createElement("video");
+        this.cameraStream.autoplay = true;
+        this.cameraStream.muted = true;
+        this.cameraStream.controls = false;
+        this.cameraStream.controls = false;
+        this.cameraStream.playsInline = true;
+        this.cameraStream.className = "camera-stream"
+        this.container.appendChild(this.cameraStream)
+        this.controlContainer = <HTMLDivElement>document.createElement("div");
+        this.controlContainer.className = "action-box"
+        this.container.appendChild(this.controlContainer)
+    }
 
     async initialize(): Promise<void> {
         this.eventManager.dispatchEvent('loading', {
@@ -56,6 +72,10 @@ export class IdCard extends Verification {
             isLoaded: true,
         });
 
+        this.retry();
+    }
+    
+    public retry(): void {
         let validCounter = 0;
         this.faceSpeakerValidator.start(
             () => {
@@ -71,10 +91,10 @@ export class IdCard extends Verification {
                 if (validCounter % 10 == 0)
                     this.eventManager.dispatchEvent('capture_progress', {
                         job: "id_card",
-                        progress: validCounter,
+                        progress: validCounter*2,
                     });
 
-                if (validCounter > 100) {
+                if (validCounter > 50) {
                     this.faceSpeakerValidator.cleanup()
                     let blob = await this.Camera.capture();
                     let reader = new FileReader();
@@ -87,7 +107,6 @@ export class IdCard extends Verification {
                 }
             }
         );
-
     }
 
     async cleanup(): Promise<void> {
@@ -95,6 +114,8 @@ export class IdCard extends Verification {
         this.faceDetector.cleanup();
         this.faceFeatureExtractor.cleanup();
         this.faceSpeakerValidator.cleanup();
+        this.cameraStream.remove()
+        this.controlContainer.remove();
     }
 
     isJob(): boolean {

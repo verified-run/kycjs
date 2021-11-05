@@ -26,7 +26,7 @@ export class FaceDetectorBlazeFace implements FaceDetectorInterface {
             await tf.ready()
             tf.setBackend("wasm");
             model = await blazeFace({
-                modelUrl: "/blazeface/model.json",
+                modelUrl: "/demo/blazeface/model.json",
             });
         }
         this.isActive = true;

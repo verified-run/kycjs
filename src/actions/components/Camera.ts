@@ -20,7 +20,7 @@ export class Camera {
                 if (!this.video) {
                     return;
                 }
-                this.video.play();
+                // this.video.play();
                 resolve(this.video);
             };
         });
@@ -39,7 +39,8 @@ export class Camera {
     }
 
     cleanup(): void {
-        this.cameraStream.getTracks().forEach(track => track.stop())
+        if(this.cameraStream)
+            this.cameraStream.getTracks().forEach(track => track.stop())
         this.video.pause();
         this.video.srcObject = null;
     }

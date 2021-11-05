@@ -22,6 +22,7 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
      * @property {ServerRequest.IIdCard|null} [idCard] ServerRequest idCard
      * @property {ServerRequest.IError|null} [error] ServerRequest error
      * @property {ServerRequest.IJobs|null} [jobs] ServerRequest jobs
+     * @property {ServerRequest.IPong|null} [pong] ServerRequest pong
      */
 
     /**
@@ -111,17 +112,25 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
      */
     ServerRequest.prototype.jobs = null;
 
+    /**
+     * ServerRequest pong.
+     * @member {ServerRequest.IPong|null|undefined} pong
+     * @memberof ServerRequest
+     * @instance
+     */
+    ServerRequest.prototype.pong = null;
+
     // OneOf field names bound to virtual getters and setters
     let $oneOfFields;
 
     /**
      * ServerRequest data.
-     * @member {"finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"jobs"|undefined} data
+     * @member {"finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"jobs"|"pong"|undefined} data
      * @memberof ServerRequest
      * @instance
      */
     Object.defineProperty(ServerRequest.prototype, "data", {
-        get: $util.oneOfGetter($oneOfFields = ["finish", "faceText", "faceAgreement", "faceMovement", "idCard", "error", "jobs"]),
+        get: $util.oneOfGetter($oneOfFields = ["finish", "faceText", "faceAgreement", "faceMovement", "idCard", "error", "jobs", "pong"]),
         set: $util.oneOfSetter($oneOfFields)
     });
 
@@ -167,6 +176,8 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             $root.ServerRequest.Error.encode(message.error, writer.uint32(/* id 10, wireType 2 =*/82).fork()).ldelim();
         if (message.jobs != null && Object.hasOwnProperty.call(message, "jobs"))
             $root.ServerRequest.Jobs.encode(message.jobs, writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
+        if (message.pong != null && Object.hasOwnProperty.call(message, "pong"))
+            $root.ServerRequest.Pong.encode(message.pong, writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
         return writer;
     };
 
@@ -227,6 +238,9 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
                 break;
             case 11:
                 message.jobs = $root.ServerRequest.Jobs.decode(reader, reader.uint32());
+                break;
+            case 12:
+                message.pong = $root.ServerRequest.Pong.decode(reader, reader.uint32());
                 break;
             default:
                 reader.skipType(tag & 7);
@@ -338,6 +352,16 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
                     return "jobs." + error;
             }
         }
+        if (message.pong != null && message.hasOwnProperty("pong")) {
+            if (properties.data === 1)
+                return "data: multiple values";
+            properties.data = 1;
+            {
+                let error = $root.ServerRequest.Pong.verify(message.pong);
+                if (error)
+                    return "pong." + error;
+            }
+        }
         return null;
     };
 
@@ -391,6 +415,11 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             if (typeof object.jobs !== "object")
                 throw TypeError(".ServerRequest.jobs: object expected");
             message.jobs = $root.ServerRequest.Jobs.fromObject(object.jobs);
+        }
+        if (object.pong != null) {
+            if (typeof object.pong !== "object")
+                throw TypeError(".ServerRequest.pong: object expected");
+            message.pong = $root.ServerRequest.Pong.fromObject(object.pong);
         }
         return message;
     };
@@ -450,6 +479,11 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             object.jobs = $root.ServerRequest.Jobs.toObject(message.jobs, options);
             if (options.oneofs)
                 object.data = "jobs";
+        }
+        if (message.pong != null && message.hasOwnProperty("pong")) {
+            object.pong = $root.ServerRequest.Pong.toObject(message.pong, options);
+            if (options.oneofs)
+                object.data = "pong";
         }
         return object;
     };
@@ -2089,8 +2123,376 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         return Error;
     })(ServerRequest.Error || {});
 
+    ServerRequest.Pong = (function(Pong) {
+
+        /**
+         * Properties of a Pong.
+         * @memberof ServerRequest
+         * @interface IPong
+         */
+
+        /**
+         * Constructs a new Pong.
+         * @memberof ServerRequest
+         * @classdesc Represents a Pong.
+         * @implements IPong
+         * @constructor
+         * @param {ServerRequest.IPong=} [properties] Properties to set
+         */
+        function Pong(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new Pong instance using the specified properties.
+         * @function create
+         * @memberof ServerRequest.Pong
+         * @static
+         * @param {ServerRequest.IPong=} [properties] Properties to set
+         * @returns {ServerRequest.Pong} Pong instance
+         */
+        Pong.create = function create(properties) {
+            return new Pong(properties);
+        };
+
+        /**
+         * Encodes the specified Pong message. Does not implicitly {@link ServerRequest.Pong.verify|verify} messages.
+         * @function encode
+         * @memberof ServerRequest.Pong
+         * @static
+         * @param {ServerRequest.IPong} message Pong message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Pong.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Pong message, length delimited. Does not implicitly {@link ServerRequest.Pong.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof ServerRequest.Pong
+         * @static
+         * @param {ServerRequest.IPong} message Pong message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Pong.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Pong message from the specified reader or buffer.
+         * @function decode
+         * @memberof ServerRequest.Pong
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {ServerRequest.Pong} Pong
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Pong.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ServerRequest.Pong();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Pong message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof ServerRequest.Pong
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {ServerRequest.Pong} Pong
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Pong.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Pong message.
+         * @function verify
+         * @memberof ServerRequest.Pong
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Pong.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a Pong message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof ServerRequest.Pong
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {ServerRequest.Pong} Pong
+         */
+        Pong.fromObject = function fromObject(object) {
+            if (object instanceof $root.ServerRequest.Pong)
+                return object;
+            return new $root.ServerRequest.Pong();
+        };
+
+        /**
+         * Creates a plain object from a Pong message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof ServerRequest.Pong
+         * @static
+         * @param {ServerRequest.Pong} message Pong
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Pong.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this Pong to JSON.
+         * @function toJSON
+         * @memberof ServerRequest.Pong
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Pong.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Pong;
+    })(ServerRequest.Pong || {});
+
     return ServerRequest;
 })($root.ServerRequest || {});
+
+export const ServerRequestList = $root.ServerRequestList = ((ServerRequestList) => {
+
+    /**
+     * Properties of a ServerRequestList.
+     * @exports IServerRequestList
+     * @interface IServerRequestList
+     * @property {Array.<IServerRequest>|null} [serverRequests] ServerRequestList serverRequests
+     */
+
+    /**
+     * Constructs a new ServerRequestList.
+     * @exports ServerRequestList
+     * @classdesc Represents a ServerRequestList.
+     * @implements IServerRequestList
+     * @constructor
+     * @param {IServerRequestList=} [properties] Properties to set
+     */
+    function ServerRequestList(properties) {
+        this.serverRequests = [];
+        if (properties)
+            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * ServerRequestList serverRequests.
+     * @member {Array.<IServerRequest>} serverRequests
+     * @memberof ServerRequestList
+     * @instance
+     */
+    ServerRequestList.prototype.serverRequests = $util.emptyArray;
+
+    /**
+     * Creates a new ServerRequestList instance using the specified properties.
+     * @function create
+     * @memberof ServerRequestList
+     * @static
+     * @param {IServerRequestList=} [properties] Properties to set
+     * @returns {ServerRequestList} ServerRequestList instance
+     */
+    ServerRequestList.create = function create(properties) {
+        return new ServerRequestList(properties);
+    };
+
+    /**
+     * Encodes the specified ServerRequestList message. Does not implicitly {@link ServerRequestList.verify|verify} messages.
+     * @function encode
+     * @memberof ServerRequestList
+     * @static
+     * @param {IServerRequestList} message ServerRequestList message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ServerRequestList.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.serverRequests != null && message.serverRequests.length)
+            for (let i = 0; i < message.serverRequests.length; ++i)
+                $root.ServerRequest.encode(message.serverRequests[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        return writer;
+    };
+
+    /**
+     * Encodes the specified ServerRequestList message, length delimited. Does not implicitly {@link ServerRequestList.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof ServerRequestList
+     * @static
+     * @param {IServerRequestList} message ServerRequestList message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    ServerRequestList.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a ServerRequestList message from the specified reader or buffer.
+     * @function decode
+     * @memberof ServerRequestList
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {ServerRequestList} ServerRequestList
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ServerRequestList.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ServerRequestList();
+        while (reader.pos < end) {
+            let tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                if (!(message.serverRequests && message.serverRequests.length))
+                    message.serverRequests = [];
+                message.serverRequests.push($root.ServerRequest.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a ServerRequestList message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof ServerRequestList
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {ServerRequestList} ServerRequestList
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    ServerRequestList.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a ServerRequestList message.
+     * @function verify
+     * @memberof ServerRequestList
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    ServerRequestList.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.serverRequests != null && message.hasOwnProperty("serverRequests")) {
+            if (!Array.isArray(message.serverRequests))
+                return "serverRequests: array expected";
+            for (let i = 0; i < message.serverRequests.length; ++i) {
+                let error = $root.ServerRequest.verify(message.serverRequests[i]);
+                if (error)
+                    return "serverRequests." + error;
+            }
+        }
+        return null;
+    };
+
+    /**
+     * Creates a ServerRequestList message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ServerRequestList
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ServerRequestList} ServerRequestList
+     */
+    ServerRequestList.fromObject = function fromObject(object) {
+        if (object instanceof $root.ServerRequestList)
+            return object;
+        let message = new $root.ServerRequestList();
+        if (object.serverRequests) {
+            if (!Array.isArray(object.serverRequests))
+                throw TypeError(".ServerRequestList.serverRequests: array expected");
+            message.serverRequests = [];
+            for (let i = 0; i < object.serverRequests.length; ++i) {
+                if (typeof object.serverRequests[i] !== "object")
+                    throw TypeError(".ServerRequestList.serverRequests: object expected");
+                message.serverRequests[i] = $root.ServerRequest.fromObject(object.serverRequests[i]);
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ServerRequestList message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ServerRequestList
+     * @static
+     * @param {ServerRequestList} message ServerRequestList
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ServerRequestList.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        let object = {};
+        if (options.arrays || options.defaults)
+            object.serverRequests = [];
+        if (message.serverRequests && message.serverRequests.length) {
+            object.serverRequests = [];
+            for (let j = 0; j < message.serverRequests.length; ++j)
+                object.serverRequests[j] = $root.ServerRequest.toObject(message.serverRequests[j], options);
+        }
+        return object;
+    };
+
+    /**
+     * Converts this ServerRequestList to JSON.
+     * @function toJSON
+     * @memberof ServerRequestList
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ServerRequestList.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return ServerRequestList;
+})($root.ServerRequestList || {});
 
 export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
 
@@ -2105,6 +2507,7 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
      * @property {ClientRequest.IFaceMovement|null} [faceMovement] ClientRequest faceMovement
      * @property {ClientRequest.IIdCard|null} [idCard] ClientRequest idCard
      * @property {ClientRequest.IError|null} [error] ClientRequest error
+     * @property {ClientRequest.IPing|null} [ping] ClientRequest ping
      */
 
     /**
@@ -2178,17 +2581,25 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
      */
     ClientRequest.prototype.error = null;
 
+    /**
+     * ClientRequest ping.
+     * @member {ClientRequest.IPing|null|undefined} ping
+     * @memberof ClientRequest
+     * @instance
+     */
+    ClientRequest.prototype.ping = null;
+
     // OneOf field names bound to virtual getters and setters
     let $oneOfFields;
 
     /**
      * ClientRequest data.
-     * @member {"start"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|undefined} data
+     * @member {"start"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"ping"|undefined} data
      * @memberof ClientRequest
      * @instance
      */
     Object.defineProperty(ClientRequest.prototype, "data", {
-        get: $util.oneOfGetter($oneOfFields = ["start", "faceText", "faceAgreement", "faceMovement", "idCard", "error"]),
+        get: $util.oneOfGetter($oneOfFields = ["start", "faceText", "faceAgreement", "faceMovement", "idCard", "error", "ping"]),
         set: $util.oneOfSetter($oneOfFields)
     });
 
@@ -2230,6 +2641,8 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             $root.ClientRequest.IdCard.encode(message.idCard, writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
         if (message.error != null && Object.hasOwnProperty.call(message, "error"))
             $root.ClientRequest.Error.encode(message.error, writer.uint32(/* id 10, wireType 2 =*/82).fork()).ldelim();
+        if (message.ping != null && Object.hasOwnProperty.call(message, "ping"))
+            $root.ClientRequest.Ping.encode(message.ping, writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
         return writer;
     };
 
@@ -2284,6 +2697,9 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
                 break;
             case 10:
                 message.error = $root.ClientRequest.Error.decode(reader, reader.uint32());
+                break;
+            case 12:
+                message.ping = $root.ClientRequest.Ping.decode(reader, reader.uint32());
                 break;
             default:
                 reader.skipType(tag & 7);
@@ -2382,6 +2798,16 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
                     return "error." + error;
             }
         }
+        if (message.ping != null && message.hasOwnProperty("ping")) {
+            if (properties.data === 1)
+                return "data: multiple values";
+            properties.data = 1;
+            {
+                let error = $root.ClientRequest.Ping.verify(message.ping);
+                if (error)
+                    return "ping." + error;
+            }
+        }
         return null;
     };
 
@@ -2428,6 +2854,11 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             if (typeof object.error !== "object")
                 throw TypeError(".ClientRequest.error: object expected");
             message.error = $root.ClientRequest.Error.fromObject(object.error);
+        }
+        if (object.ping != null) {
+            if (typeof object.ping !== "object")
+                throw TypeError(".ClientRequest.ping: object expected");
+            message.ping = $root.ClientRequest.Ping.fromObject(object.ping);
         }
         return message;
     };
@@ -2478,6 +2909,11 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             object.error = $root.ClientRequest.Error.toObject(message.error, options);
             if (options.oneofs)
                 object.data = "error";
+        }
+        if (message.ping != null && message.hasOwnProperty("ping")) {
+            object.ping = $root.ClientRequest.Ping.toObject(message.ping, options);
+            if (options.oneofs)
+                object.data = "ping";
         }
         return object;
     };
@@ -4066,6 +4502,166 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
 
         return Error;
     })(ClientRequest.Error || {});
+
+    ClientRequest.Ping = (function(Ping) {
+
+        /**
+         * Properties of a Ping.
+         * @memberof ClientRequest
+         * @interface IPing
+         */
+
+        /**
+         * Constructs a new Ping.
+         * @memberof ClientRequest
+         * @classdesc Represents a Ping.
+         * @implements IPing
+         * @constructor
+         * @param {ClientRequest.IPing=} [properties] Properties to set
+         */
+        function Ping(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new Ping instance using the specified properties.
+         * @function create
+         * @memberof ClientRequest.Ping
+         * @static
+         * @param {ClientRequest.IPing=} [properties] Properties to set
+         * @returns {ClientRequest.Ping} Ping instance
+         */
+        Ping.create = function create(properties) {
+            return new Ping(properties);
+        };
+
+        /**
+         * Encodes the specified Ping message. Does not implicitly {@link ClientRequest.Ping.verify|verify} messages.
+         * @function encode
+         * @memberof ClientRequest.Ping
+         * @static
+         * @param {ClientRequest.IPing} message Ping message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Ping.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Ping message, length delimited. Does not implicitly {@link ClientRequest.Ping.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof ClientRequest.Ping
+         * @static
+         * @param {ClientRequest.IPing} message Ping message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Ping.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Ping message from the specified reader or buffer.
+         * @function decode
+         * @memberof ClientRequest.Ping
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {ClientRequest.Ping} Ping
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Ping.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ClientRequest.Ping();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Ping message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof ClientRequest.Ping
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {ClientRequest.Ping} Ping
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Ping.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Ping message.
+         * @function verify
+         * @memberof ClientRequest.Ping
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Ping.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a Ping message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof ClientRequest.Ping
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {ClientRequest.Ping} Ping
+         */
+        Ping.fromObject = function fromObject(object) {
+            if (object instanceof $root.ClientRequest.Ping)
+                return object;
+            return new $root.ClientRequest.Ping();
+        };
+
+        /**
+         * Creates a plain object from a Ping message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof ClientRequest.Ping
+         * @static
+         * @param {ClientRequest.Ping} message Ping
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Ping.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this Ping to JSON.
+         * @function toJSON
+         * @memberof ClientRequest.Ping
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Ping.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Ping;
+    })(ClientRequest.Ping || {});
 
     return ClientRequest;
 })($root.ClientRequest || {});

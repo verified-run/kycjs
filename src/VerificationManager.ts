@@ -1,7 +1,6 @@
 import { Verification, VerificationList } from "./actions/Verification";
 import { FaceText } from "./actions/FaceText";
 import { IdCard } from "./actions/IdCard";
-import { VideoElement } from "./types";
 import { WS } from "./WS";
 import { ServerRequest } from "./wsMessages";
 import { FaceAgreement } from "./actions/FaceAgreement";
@@ -26,8 +25,7 @@ export class VerificationManager {
 
     constructor(
         protected ws: WS,
-        protected cameraStream: VideoElement,
-        protected controlContainer: HTMLElement,
+        protected container: HTMLElement,
         protected eventManager: EventManager
     ) {
         for (let key in this.actions) {
@@ -38,23 +36,21 @@ export class VerificationManager {
     }
 
     execute(actionName: string, serverRequest: ServerRequest) {
-        
-        if (this.currentAction && serverRequest.id == this.currentAction.getJobId()) {
-            console.log('same job requested, no change needed.');
-            return;
-        };
-
         let action = new this.actions[actionName](
             serverRequest,
             this.ws,
-            this.cameraStream,
-            this.controlContainer,
+            this.container,
             this.eventManager
         )
         if (action.isJob()) {
             if (this.currentAction) this.currentAction.cleanup();
             this.currentAction = action;
         }
+        
+        if(actionName == 'error'){
+            this.currentAction.retry();
+        }
+
         action.initialize();
     }
 }
