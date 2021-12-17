@@ -15,23 +15,22 @@ let plugins = [
 module.exports = {
   devtool: 'source-map',
   entry: {
-    WsMessage: './src/wsMessages.js',
-    WsMessage: './src/wsMessages.js',
-    Normal: {
-      import: './src/Environments/Normal.ts',
-      dependOn: ['WsMessage'],
-    },
-    LowPerformance: {
-      import: './src/Environments/LowPerformance.ts',
-      dependOn: ['WsMessage'],
-    },
-    FileOnly: {
-      import: './src/Environments/FileOnly.ts',
-      dependOn: ['WsMessage'],
-    },
+    // WsMessage: './src/wsMessages.js',
+    // Normal: {
+    //   import: './src/Environments/Normal.ts',
+    //   dependOn: ['WsMessage'],
+    // },
+    // LowPerformance: {
+    //   import: './src/Environments/LowPerformance.ts',
+    //   dependOn: ['WsMessage'],
+    // },
+    // FileOnly: {
+    //   import: './src/Environments/FileOnly.ts',
+    //   dependOn: ['WsMessage'],
+    // },
     KYC: {
       import: './src/KYC.ts',
-      dependOn: ['WsMessage','Normal','LowPerformance','FileOnly'],
+      // dependOn: ['WsMessage','Normal','LowPerformance','FileOnly'],
     },
     example: {
       import: './example/index.ts',
