@@ -1,7 +1,4 @@
-// var messages = require('./ServerResponse');
 import { ServerRequest, ClientRequest } from './wsMessages'
-
-
 export interface WsJsonMessage {
   name: string;
   data: any;

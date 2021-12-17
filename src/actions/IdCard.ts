@@ -77,6 +77,11 @@ export class IdCard extends Verification {
     
     public retry(): void {
         let validCounter = 0;
+        this.eventManager.dispatchEvent('capture_progress', {
+            job: "id_card",
+            progress: 0,
+        });
+
         this.faceSpeakerValidator.start(
             () => {
                 validCounter = 0;

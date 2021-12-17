@@ -5,5 +5,7 @@ services:
     build: 
       context: .
       target: app
+    volumes:
+      -
     ports:
       - '8080:80'

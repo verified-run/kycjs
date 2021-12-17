@@ -1,9 +1,8 @@
 import { EventManager } from "../EventManager"
-import { VideoElement } from "../types"
 import { WS } from "../WS"
 import { ServerRequest } from "../wsMessages"
 
-type ValidatorConstructor = {
+export type ValidatorConstructor = {
     new(serverRequest: ServerRequest, ws: WS, container: HTMLElement, eventManager: EventManager): Verification;
 }
 
