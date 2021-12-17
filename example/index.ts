@@ -1,6 +1,7 @@
 import "./sentry";
 import { KYC } from '../src/KYC'
 import "./index.css";
+import { KycEventCaptureProgress, KycEventError, KycEventFinish, KycEventJobs, KycEventLoading, KycEventNextJob } from "../src/EventManager";
 
 const sessionBtn = <HTMLButtonElement>document.getElementById("session-btn")
 const sessionInput = <HTMLInputElement>document.getElementById("session-key");
@@ -32,11 +33,11 @@ sessionBtn.onclick = () => {
         selectedValue
     )
 
-    kyc.eventManager.addListener('error', (e) => {
+    kyc.eventManager.addListener('error', (e: KycEventError) => {
         alert(`${e.errorCode} => ${e.errorMessage}`);
     })
 
-    kyc.eventManager.addListener('next_job', (e) => {
+    kyc.eventManager.addListener('next_job', (e: KycEventNextJob) => {
 
         let textBox = <HTMLProgressElement>document.getElementById("text-box");
 
@@ -50,11 +51,11 @@ sessionBtn.onclick = () => {
                 return;
         }
     })
-    kyc.eventManager.addListener('capture_progress', (e) => {
+    kyc.eventManager.addListener('capture_progress', (e: KycEventCaptureProgress) => {
         let x = <HTMLProgressElement>document.getElementById("capture-progress");
         x.value = e.progress
     })
-    kyc.eventManager.addListener('jobs', (e) => {
+    kyc.eventManager.addListener('jobs', (e: KycEventJobs) => {
         let x = <HTMLProgressElement>document.getElementById("jobs-list");
         while (x.lastElementChild) x.removeChild(x.lastElementChild);
         e.jobs.forEach((item) => {
@@ -64,7 +65,7 @@ sessionBtn.onclick = () => {
         })
     })
 
-    kyc.eventManager.addListener('loading', (e) => {
+    kyc.eventManager.addListener('loading', (e: KycEventLoading) => {
         let container = <HTMLProgressElement>document.getElementById("container");
 
         if (!e.isLoaded) {
@@ -73,7 +74,7 @@ sessionBtn.onclick = () => {
         }
         container.classList.remove('loading');
     })
-    kyc.eventManager.addListener('finish', (e) => {
+    kyc.eventManager.addListener('finish', (e: KycEventFinish) => {
         alert('finish');
         kyc.cleanup()
     })
