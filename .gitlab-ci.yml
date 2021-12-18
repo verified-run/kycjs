@@ -18,3 +18,4 @@ build_prod:
     - docker push $CI_REGISTRY_IMAGE:latest    
   only:
     - tags
+    - main

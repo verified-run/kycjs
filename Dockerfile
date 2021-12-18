@@ -6,6 +6,7 @@ COPY yarn.lock ./
 RUN yarn install
 
 COPY ./ ./
+RUN ls ./src
 RUN yarn run build
 RUN cp -r ./statics/* ./dist/
 RUN chmod -R o+rx ./dist/
