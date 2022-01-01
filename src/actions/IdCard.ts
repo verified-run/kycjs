@@ -24,10 +24,6 @@ export class IdCard extends Verification {
     };
 
     public draw(): void {
-        this.controlContainer = <HTMLDivElement>document.createElement("div");
-        this.controlContainer.className = "action-box"
-        this.container.appendChild(this.controlContainer)
-
         this.cameraStream = <VideoElement>document.createElement("video");
         this.cameraStream.autoplay = true;
         this.cameraStream.muted = true;
@@ -36,6 +32,9 @@ export class IdCard extends Verification {
         this.cameraStream.playsInline = true;
         this.cameraStream.className = "camera-stream"
         this.container.appendChild(this.cameraStream)
+        this.controlContainer = <HTMLDivElement>document.createElement("div");
+        this.controlContainer.className = "action-box"
+        this.container.appendChild(this.controlContainer)
     }
 
     async initialize(): Promise<void> {

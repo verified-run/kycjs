@@ -32,13 +32,6 @@ export class FaceText extends Verification {
     };
 
     public draw(): void {
-        this.controlContainer = <HTMLDivElement>document.createElement("div");
-        this.controlContainer.className = "action-box"
-        this.container.appendChild(this.controlContainer)
-        this.pressHoldBtn = <HTMLButtonElement>document.createElement("button");
-        this.pressHoldBtn.innerText = 'record';
-        this.controlContainer.appendChild(this.pressHoldBtn)
-
         this.cameraStream = <VideoElement>document.createElement("video");
         this.cameraStream.autoplay = true;
         this.cameraStream.muted = true;
@@ -47,6 +40,12 @@ export class FaceText extends Verification {
         this.cameraStream.playsInline = true;
         this.cameraStream.className = "camera-stream"
         this.container.appendChild(this.cameraStream)
+        this.controlContainer = <HTMLDivElement>document.createElement("div");
+        this.controlContainer.className = "action-box"
+        this.container.appendChild(this.controlContainer)
+        this.pressHoldBtn = <HTMLButtonElement>document.createElement("button");
+        this.pressHoldBtn.innerText = 'record';
+        this.controlContainer.appendChild(this.pressHoldBtn)
     }
 
     async initialize(): Promise<void> {

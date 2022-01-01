@@ -51,7 +51,9 @@ body{
   bottom: 30px;
   width: 100%;
 }
-
+li.verified {
+  color: #0b957a;
+}
 #capture-progress {
   position: absolute;
   bottom: 0;

@@ -43,7 +43,7 @@ sessionBtn.onclick = () => {
             kyc.cleanup();
         }
     }
-    
+
 
     kyc.eventManager.addListener('error', (e: KycEventError) => {
         alert(`${e.errorCode} => ${e.errorMessage}`);
@@ -72,6 +72,8 @@ sessionBtn.onclick = () => {
         while (x.lastElementChild) x.removeChild(x.lastElementChild);
         e.jobs.forEach((item) => {
             let liEl = document.createElement('li');
+            if (item.verified)
+                liEl.classList.add("verified");
             liEl.innerText = `${item.id}. ${item.action}:${item.verified}`;
             x.appendChild(liEl);
         })
