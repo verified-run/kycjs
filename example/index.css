@@ -15,6 +15,7 @@ body{
 }
 #kyc-container {
   height: 80vh;
+  max-width: 85vw;
   width: max-content;
   margin: auto;
   /* display: inline; */
@@ -23,6 +24,7 @@ body{
 
 .camera-stream {
   width: inherit;
+  max-width: 85vw;
   height: inherit;
 }
 
