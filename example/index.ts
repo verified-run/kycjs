@@ -1,6 +1,6 @@
+import "./index.css";
 import "./sentry";
 import { KYC } from '../src/KYC'
-import "./index.css";
 import { KycEventCaptureProgress, KycEventError, KycEventFinish, KycEventJobs, KycEventLoading, KycEventNextJob } from "../src/EventManager";
 
 const sessionBtn = <HTMLButtonElement>document.getElementById("session-btn")
@@ -13,6 +13,7 @@ if (hash) {
     sessionInput.value = hash.substring(1)
 }
 export type EnvironmentName = "normal" | "low-performance" | "file-only"
+var modal = <HTMLDivElement>document.getElementById("kyc-modal");
 
 sessionBtn.onclick = () => {
     let selectedValue: EnvironmentName;
@@ -32,6 +33,17 @@ sessionBtn.onclick = () => {
         container,
         selectedValue
     )
+
+
+
+    modal.style.display = "block";
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            kyc.cleanup();
+        }
+    }
+    
 
     kyc.eventManager.addListener('error', (e: KycEventError) => {
         alert(`${e.errorCode} => ${e.errorMessage}`);

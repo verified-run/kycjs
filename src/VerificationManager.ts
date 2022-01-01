@@ -56,4 +56,10 @@ export class VerificationManager {
             break
         }
     }
+    close():void{
+        if (this.currentAction) {
+            console.dir(this.currentAction)
+            this.currentAction.cleanup();
+        }
+    }
 }

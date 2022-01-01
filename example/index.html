@@ -23,13 +23,16 @@
     <button id="session-btn">use</button>
   </div>
 
-  <div id="container">
-    <progress id="capture-progress" max="100" value="0">0%</progress>
-    <ul id="text-box"></ul>
-    <div id="kyc-container" class="row"></div>
-    <ul id="jobs-list"></ul>
-    <div v-if="debug" class="col-6" id="debug-canvas"></div>
+  <div id="kyc-modal" class="modal">
+    <div id="container">
+      <progress id="capture-progress" max="100" value="0">0%</progress>
+      <ul id="text-box"></ul>
+      <div id="kyc-container" class="row"></div>
+      <ul id="jobs-list"></ul>
+      <!-- <div v-if="debug" class="col-6" id="debug-canvas"></div> -->
+    </div>
   </div>
+
 </body>
 
 </html>

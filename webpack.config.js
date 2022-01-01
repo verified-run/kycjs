@@ -5,7 +5,7 @@ let plugins = [
   new HtmlWebpackPlugin({
     title: 'kyc',
     template: './example/index.html',
-    publicPath: '/demo/',
+    publicPath: process.env.NODE_ENV == 'development' ? '' : '/demo/',
     favicon: "./example/favicon.png",
   }),
 ];

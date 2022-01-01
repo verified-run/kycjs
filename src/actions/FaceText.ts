@@ -32,6 +32,13 @@ export class FaceText extends Verification {
     };
 
     public draw(): void {
+        this.controlContainer = <HTMLDivElement>document.createElement("div");
+        this.controlContainer.className = "action-box"
+        this.container.appendChild(this.controlContainer)
+        this.pressHoldBtn = <HTMLButtonElement>document.createElement("button");
+        this.pressHoldBtn.innerText = 'record';
+        this.controlContainer.appendChild(this.pressHoldBtn)
+
         this.cameraStream = <VideoElement>document.createElement("video");
         this.cameraStream.autoplay = true;
         this.cameraStream.muted = true;
@@ -40,12 +47,6 @@ export class FaceText extends Verification {
         this.cameraStream.playsInline = true;
         this.cameraStream.className = "camera-stream"
         this.container.appendChild(this.cameraStream)
-        this.controlContainer = <HTMLDivElement>document.createElement("div");
-        this.controlContainer.className = "action-box"
-        this.container.appendChild(this.controlContainer)
-        this.pressHoldBtn = <HTMLButtonElement>document.createElement("button");
-        this.pressHoldBtn.innerText = 'record';
-        this.controlContainer.appendChild(this.pressHoldBtn)
     }
 
     async initialize(): Promise<void> {
@@ -127,13 +128,13 @@ export class FaceText extends Verification {
     }
 
     async cleanup(): Promise<void> {
-        this.Camera.cleanup();
-        this.faceDetector.cleanup();
-        this.faceFeatureExtractor.cleanup();
-        this.canvasRender.cleanup();
-        this.recorder.cleanup();
-        this.pressHold.cleanup();
-        this.faceSpeakerValidator.cleanup();
+        if (this.Camera) this.Camera.cleanup();
+        if (this.faceDetector) this.faceDetector.cleanup();
+        if (this.faceFeatureExtractor) this.faceFeatureExtractor.cleanup();
+        if (this.canvasRender) this.canvasRender.cleanup();
+        if (this.recorder) this.recorder.cleanup();
+        if (this.pressHold) this.pressHold.cleanup();
+        if (this.faceSpeakerValidator) this.faceSpeakerValidator.cleanup();
         this.pressHoldBtn.remove();
         this.cameraStream.remove()
         this.controlContainer.remove();
