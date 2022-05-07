@@ -42,3 +42,20 @@ jobs:
           tags: ${{ steps.meta_app.outputs.tags }}
           labels: ${{ steps.meta_app.outputs.labels }}
           target: app
+      - uses: shrink/actions-docker-extract@v1
+        id: extract
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        with:
+          image: ${{ secrets.DOCKER_HUB }}/${{ github.repository }}
+          path: /usr/share/nginx/html/demo
+      - name: Upload Dist
+        uses: actions/upload-artifact@v2
+        with:
+          path: ${{ steps.extract.outputs.destination }}
+          name: dist
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          repository-name	: verified-run/demo
+          branch: main
+          folder: ${{ steps.extract.outputs.destination }} 
