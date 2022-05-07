@@ -49,11 +49,13 @@ jobs:
           image: ${{ secrets.DOCKER_HUB }}/${{ github.repository }}
           path: /usr/share/nginx/html/demo
       - name: Upload Dist
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@v2
         with:
           path: ${{ steps.extract.outputs.destination }}
           name: dist
       - name: Deploy 🚀
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           repository-name	: verified-run/demo
