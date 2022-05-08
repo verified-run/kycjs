@@ -58,6 +58,7 @@ jobs:
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
+          token: ${{ secrets.DEPLOY_PAT }}
           repository-name	: verified-run/demo
           branch: main
           folder: ${{ steps.extract.outputs.destination }} 
