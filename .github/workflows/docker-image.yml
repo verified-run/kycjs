@@ -61,4 +61,4 @@ jobs:
           token: ${{ secrets.DEPLOY_PAT }}
           repository-name	: verified-run/demo
           branch: main
-          folder: ${{ steps.extract.outputs.destination }} 
+          folder: ${{ steps.extract.outputs.destination }}/demo
