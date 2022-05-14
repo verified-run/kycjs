@@ -12,7 +12,7 @@ export class KYC {
         container: HTMLElement,
         environmentName: EnvironmentName = "normal"
     ) {
-        this.ws = new WS(sessionId,"wss://hoomanna.com/ws");
+        this.ws = new WS(sessionId, "wss://app.verified.run/ws");
         this.vm = new VerificationManager(this.ws, container, this.eventManager, environmentName)
         this.ws.start()
     }
