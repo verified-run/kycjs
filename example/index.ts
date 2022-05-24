@@ -1,5 +1,4 @@
 import "./index.css";
-import "./sentry";
 import { KYC } from '../src/KYC'
 import { KycEventCaptureProgress, KycEventError, KycEventFinish, KycEventJobs, KycEventLoading, KycEventNextJob } from "../src/EventManager";
 
