@@ -100,7 +100,10 @@ export class IdCard extends Verification {
                     });
 
                 if (validCounter > 50) {
-                    this.faceSpeakerValidator.cleanup()
+                    this.faceSpeakerValidator.cleanup();
+                    this.eventManager.dispatchEvent('validating', {
+                        isValidating: true,
+                    });
                     let blob = await this.Camera.capture();
                     let reader = new FileReader();
                     reader.readAsArrayBuffer(blob);

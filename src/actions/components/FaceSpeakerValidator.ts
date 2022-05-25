@@ -23,7 +23,7 @@ export class FaceSpeakerValidator {
     }
 
     isReadyToSend(): boolean {
-        return (new Date).getTime() - this.recordDuration > 1000
+        return (new Date).getTime() - this.recordDuration > 3000
     }
 
     cleanup() {

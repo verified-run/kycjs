@@ -123,3 +123,35 @@ button{
   text-decoration: none;
   cursor: pointer;
 }
+
+.loading {
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  filter: grayscale(100%);
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+}
+.validating {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+}
+
+#countdown{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  padding: 25px;
+  color: rgb(255, 0, 0);
+  font-size: 4em;
+}

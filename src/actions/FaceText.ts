@@ -21,6 +21,7 @@ export class FaceText extends Verification {
     protected pressHold: PressHold;
     protected cameraStream: VideoElement;
     protected controlContainer: HTMLElement;
+    protected countDownInterval: NodeJS.Timer;
 
     protected canvasBox = {
         width: 150,
@@ -90,6 +91,13 @@ export class FaceText extends Verification {
             <HTMLButtonElement>this.pressHoldBtn,
             () => {
                 this.recorder.start();
+                let i = 3;
+                this.countDownInterval = setInterval(() => {
+                    this.eventManager.dispatchEvent('countdown', {
+                        countdown: i--,
+                    });
+                    if (i === -1) clearInterval(this.countDownInterval);
+                }, 1000);
                 this.faceSpeakerValidator.start(() => {
                     this.faceSpeakerValidator.cleanup()
                     this.recorder.stop();
@@ -102,17 +110,25 @@ export class FaceText extends Verification {
             },
             () => {
                 this.recorder.stop().then((chunks: Blob[]) => {
+                    clearInterval(this.countDownInterval);
+                    this.eventManager.dispatchEvent('countdown', {
+                        countdown: 0,
+                    });
+
                     this.pressHoldBtn.className = "inactive";
                     if (!this.faceSpeakerValidator.isReadyToSend()) {
                         this.eventManager.dispatchEvent('error', {
                             errorCode: "invalid_recording",
-                            errorMessage: "video is less than 1 second!",
+                            errorMessage: "video is less than 3 second!",
                         });
                         this.faceSpeakerValidator.cleanup();
                         return;
                     }
                     this.faceSpeakerValidator.cleanup();
-
+                    this.eventManager.dispatchEvent('validating', {
+                        isValidating: true,
+                    });
+            
                     let blob = new Blob(chunks, { type: "video/mp4;" });
                     let reader = new FileReader();
                     reader.readAsArrayBuffer(blob);
@@ -127,6 +143,7 @@ export class FaceText extends Verification {
     }
 
     async cleanup(): Promise<void> {
+        
         if (this.Camera) this.Camera.cleanup();
         if (this.faceDetector) this.faceDetector.cleanup();
         if (this.faceFeatureExtractor) this.faceFeatureExtractor.cleanup();

@@ -1,6 +1,6 @@
 import "./index.css";
 import { KYC } from '../src/KYC'
-import { KycEventCaptureProgress, KycEventError, KycEventFinish, KycEventJobs, KycEventLoading, KycEventNextJob } from "../src/EventManager";
+import { KycEventCameraCountdown, KycEventCaptureProgress, KycEventError, KycEventFinish, KycEventJobs, KycEventLoading, KycEventNextJob, KycEventValidating } from "../src/EventManager";
 
 const sessionBtn = <HTMLButtonElement>document.getElementById("session-btn")
 const sessionInput = <HTMLInputElement>document.getElementById("session-key");
@@ -66,6 +66,7 @@ sessionBtn.onclick = () => {
         let x = <HTMLProgressElement>document.getElementById("capture-progress");
         x.value = e.progress
     })
+
     kyc.eventManager.addListener('jobs', (e: KycEventJobs) => {
         let x = <HTMLProgressElement>document.getElementById("jobs-list");
         while (x.lastElementChild) x.removeChild(x.lastElementChild);
@@ -86,6 +87,27 @@ sessionBtn.onclick = () => {
             return;
         }
         container.classList.remove('loading');
+    })
+
+    kyc.eventManager.addListener('validating', (e: KycEventValidating) => {
+        let container = <HTMLProgressElement>document.getElementById("container");
+
+        if (e.isValidating) {
+            container.classList.add('validating');
+            return;
+        }
+        container.classList.remove('validating');
+    })
+    kyc.eventManager.addListener('countdown', (e: KycEventCameraCountdown) => {
+        console.log(e.countdown);
+        let textBox = <HTMLProgressElement>document.getElementById("countdown");
+
+        if (e.countdown === 0) {
+            textBox.innerText =''
+            return;
+        }
+        textBox.innerText = `${e.countdown}`
+
     })
     kyc.eventManager.addListener('finish', (e: KycEventFinish) => {
         alert('finish');

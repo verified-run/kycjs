@@ -40,6 +40,10 @@ export class VerificationManager {
         if (actionName == 'error') {
             this.currentAction.retry();
         }
+        
+        this.eventManager.dispatchEvent('validating', {
+            isValidating: false,
+        });
 
         action.initialize();
     }
