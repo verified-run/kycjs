@@ -1,6 +1,6 @@
 import "./index.css";
 import { KYC } from '../src/KYC'
-import { KycEventCameraCountdown, KycEventCaptureProgress, KycEventError, KycEventFinish, KycEventJobs, KycEventLoading, KycEventNextJob, KycEventValidating } from "../src/EventManager";
+import { KycEventRecording, KycEventCaptureProgress, KycEventError, KycEventFinish, KycEventJobs, KycEventLoading, KycEventNextJob, KycEventValidating } from "../src/EventManager";
 
 const sessionBtn = <HTMLButtonElement>document.getElementById("session-btn")
 const sessionInput = <HTMLInputElement>document.getElementById("session-key");
@@ -98,16 +98,20 @@ sessionBtn.onclick = () => {
         }
         container.classList.remove('validating');
     })
-    kyc.eventManager.addListener('countdown', (e: KycEventCameraCountdown) => {
-        console.log(e.countdown);
+    let countDownInterval: NodeJS.Timer;
+
+    kyc.eventManager.addListener('recording', (e: KycEventRecording) => {
         let textBox = <HTMLProgressElement>document.getElementById("countdown");
-
-        if (e.countdown === 0) {
-            textBox.innerText =''
-            return;
+        if(e.isRecording) {
+            let startTime = new Date().getTime();
+            countDownInterval = setInterval(() => {
+                let time = new Date().getTime() - startTime;
+                textBox.innerText = `${(time/1000).toFixed(2)}s`
+            }, 16)
+        } else {
+            clearInterval(countDownInterval);
+            textBox.innerText = ''
         }
-        textBox.innerText = `${e.countdown}`
-
     })
     kyc.eventManager.addListener('finish', (e: KycEventFinish) => {
         alert('finish');

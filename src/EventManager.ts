@@ -27,8 +27,8 @@ export interface KycEventLoading {
 export interface KycEventValidating {
     isValidating: boolean,
 }
-export interface KycEventCameraCountdown {
-    countdown: number,
+export interface KycEventRecording {
+    isRecording: boolean,
 }
 interface EventMap {
     "error": KycEventError;
@@ -38,7 +38,7 @@ interface EventMap {
     "finish": KycEventFinish;
     "loading": KycEventLoading;
     "validating": KycEventValidating;
-    "countdown": KycEventCameraCountdown;
+    "recording": KycEventRecording;
 }
 
 export interface EventList {

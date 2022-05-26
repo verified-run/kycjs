@@ -21,7 +21,6 @@ export class FaceText extends Verification {
     protected pressHold: PressHold;
     protected cameraStream: VideoElement;
     protected controlContainer: HTMLElement;
-    protected countDownInterval: NodeJS.Timer;
 
     protected canvasBox = {
         width: 150,
@@ -91,14 +90,10 @@ export class FaceText extends Verification {
             <HTMLButtonElement>this.pressHoldBtn,
             () => {
                 this.recorder.start();
-                let i = 3;
-                this.countDownInterval = setInterval(() => {
-                    this.eventManager.dispatchEvent('countdown', {
-                        countdown: i--,
-                    });
-                    if (i === -1) clearInterval(this.countDownInterval);
-                }, 1000);
-                this.faceSpeakerValidator.start(() => {
+                this.eventManager.dispatchEvent('recording', {
+                    isRecording: true,
+                });
+            this.faceSpeakerValidator.start(() => {
                     this.faceSpeakerValidator.cleanup()
                     this.recorder.stop();
                     this.pressHold.stop();
@@ -106,13 +101,15 @@ export class FaceText extends Verification {
                         errorCode: "out_of_frame",
                         errorMessage: "recording stopped, stay in frame!",
                     })
+                    this.eventManager.dispatchEvent('recording', {
+                        isRecording: false,
+                    });
                 });
             },
             () => {
                 this.recorder.stop().then((chunks: Blob[]) => {
-                    clearInterval(this.countDownInterval);
-                    this.eventManager.dispatchEvent('countdown', {
-                        countdown: 0,
+                    this.eventManager.dispatchEvent('recording', {
+                        isRecording: false,
                     });
 
                     this.pressHoldBtn.className = "inactive";
