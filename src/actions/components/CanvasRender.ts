@@ -1,4 +1,4 @@
-import { VideoElement, CanvasElement, ImageInfo, BoxSize } from "../../types";
+import { CanvasElement, BoxSize } from "../../types";
 import { FaceFeatureExtractor } from "./FaceFeatureExtractor";
 
 
@@ -9,7 +9,7 @@ export class CanvasRender  {
     private isActive = true;
 
     constructor(
-        private video: VideoElement,
+        private video: HTMLVideoElement,
         private canvasSize: BoxSize,
         private faceFeatureExtractor: FaceFeatureExtractor
     ) {

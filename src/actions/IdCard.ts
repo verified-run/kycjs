@@ -6,7 +6,7 @@ import { FaceFeatureExtractor } from "./components/FaceFeatureExtractor";
 import { FaceDetectorInterface } from "./components/FaceDetectorInterface";
 import { ClientRequest } from "../wsMessages";
 import { FaceSpeakerValidator } from "./components/FaceSpeakerValidator";
-import { ImageInfo, VideoElement } from "../types";
+import { ImageInfo } from "../types";
 
 export class IdCard extends Verification {
     protected Camera: Camera;
@@ -14,7 +14,7 @@ export class IdCard extends Verification {
     protected faceDetector: FaceDetectorInterface;
     protected faceFeatureExtractor: FaceFeatureExtractor;
     protected faceSpeakerValidator: FaceSpeakerValidator;
-    protected cameraStream: VideoElement;
+    protected cameraStream: HTMLVideoElement;
     protected controlContainer: HTMLElement;
     protected canvasBox = {
         width: 150,
@@ -26,7 +26,7 @@ export class IdCard extends Verification {
     };
 
     public draw(): void {
-        this.cameraStream = <VideoElement>document.createElement("video");
+        this.cameraStream = <HTMLVideoElement>document.createElement("video");
         this.cameraStream.autoplay = true;
         this.cameraStream.muted = true;
         this.cameraStream.controls = false;

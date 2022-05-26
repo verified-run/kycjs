@@ -8,7 +8,6 @@ import { Recorder } from "./components/Recorder";
 import { PressHold } from "./components/pressHoldBtn";
 import { ClientRequest } from "../wsMessages";
 import { FaceSpeakerValidator } from "./components/FaceSpeakerValidator";
-import { VideoElement } from "../types";
 
 export class FaceText extends Verification {
     protected Camera: Camera;
@@ -19,7 +18,7 @@ export class FaceText extends Verification {
     protected recorder: Recorder;
     protected pressHoldBtn: HTMLButtonElement;
     protected pressHold: PressHold;
-    protected cameraStream: VideoElement;
+    protected cameraStream: HTMLVideoElement;
     protected controlContainer: HTMLElement;
 
     protected canvasBox = {
@@ -32,7 +31,7 @@ export class FaceText extends Verification {
     };
 
     public draw(): void {
-        this.cameraStream = <VideoElement>document.createElement("video");
+        this.cameraStream = <HTMLVideoElement>document.createElement("video");
         this.cameraStream.autoplay = true;
         this.cameraStream.muted = true;
         this.cameraStream.controls = false;

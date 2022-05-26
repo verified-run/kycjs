@@ -1,7 +1,3 @@
-export interface VideoElement extends HTMLVideoElement {
-    requestVideoFrameCallback(cb: (now: number, metadata: any) => void): MediaStream;
-}
-
 export interface BoxSize {
     width: number;
     height: number;

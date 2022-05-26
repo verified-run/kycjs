@@ -1,7 +1,7 @@
 import * as tf from "@tensorflow/tfjs-core";
 import * as tfjsWasm from "@tensorflow/tfjs-backend-wasm";
 import { FaceDetectorInterface } from "./FaceDetectorInterface";
-import { VideoElement, NormalizedFace } from "../../types";
+import { NormalizedFace } from "../../types";
 import { BlazeFaceModel, load as blazeFace } from "@tensorflow-models/blazeface";
 import wasmSimdPath from '@tensorflow/tfjs-backend-wasm/dist/tfjs-backend-wasm-simd.wasm';
 import wasmSimdThreadedPath from '@tensorflow/tfjs-backend-wasm/dist/tfjs-backend-wasm-threaded-simd.wasm';
@@ -14,7 +14,7 @@ export class FaceDetectorBlazeFace implements FaceDetectorInterface {
     private currentFaceLocation: NormalizedFace | null;
     ;
 
-    constructor(private video: VideoElement) {}
+    constructor(private video: HTMLVideoElement) {}
 
     async Load(): Promise<void> {
         if(!model){

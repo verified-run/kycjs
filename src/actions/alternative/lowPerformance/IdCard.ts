@@ -1,16 +1,15 @@
 import { Verification } from "../.././Verification";
 import { Camera } from "../.././components/Camera";
 import { ClientRequest } from "../../../wsMessages";
-import { VideoElement } from "../../../types";
 
 export class IdCard extends Verification {
     protected Camera: Camera;
-    protected cameraStream: VideoElement;
+    protected cameraStream: HTMLVideoElement;
     protected controlContainer: HTMLElement;
     protected captureBtn: HTMLButtonElement;
     
     public draw(): void {
-        this.cameraStream = <VideoElement>document.createElement("video");
+        this.cameraStream = <HTMLVideoElement>document.createElement("video");
         this.cameraStream.autoplay = true;
         this.cameraStream.muted = true;
         this.cameraStream.controls = false;

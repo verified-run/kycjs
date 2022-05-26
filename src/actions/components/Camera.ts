@@ -1,9 +1,9 @@
-import { facingMode, VideoElement } from '../../types'
+import { facingMode } from '../../types'
 export class Camera {
     private cameraStream!: MediaStream;
-    constructor(private video: VideoElement) { }
+    constructor(private video: HTMLVideoElement) { }
 
-    async setup(facingMode: facingMode = 'user'): Promise<VideoElement> {
+    async setup(facingMode: facingMode = 'user'): Promise<HTMLVideoElement> {
         this.video.muted = true;
         this.video.srcObject =
             this.cameraStream =
