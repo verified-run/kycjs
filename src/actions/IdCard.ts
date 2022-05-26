@@ -1,5 +1,6 @@
 import { Verification } from "./Verification";
 import { Camera } from "./components/Camera";
+import { Recorder } from "./components/Recorder";
 import { FaceDetectorBlazeFace } from "./components/FaceDetectorBlazeFace";
 import { FaceFeatureExtractor } from "./components/FaceFeatureExtractor";
 import { FaceDetectorInterface } from "./components/FaceDetectorInterface";
@@ -9,6 +10,7 @@ import { ImageInfo, VideoElement } from "../types";
 
 export class IdCard extends Verification {
     protected Camera: Camera;
+    protected recorder: Recorder;
     protected faceDetector: FaceDetectorInterface;
     protected faceFeatureExtractor: FaceFeatureExtractor;
     protected faceSpeakerValidator: FaceSpeakerValidator;
@@ -45,6 +47,9 @@ export class IdCard extends Verification {
         this.dispatchJobInfo();
         this.Camera = new Camera(this.cameraStream);
         await this.Camera.setup("environment");
+        let stream = this.Camera.getStream();
+        stream.addTrack(this.Camera.getStream().getAudioTracks()[0]);
+        this.recorder = new Recorder(stream);
 
         this.videoBox = {
             width: this.cameraStream.videoWidth,
@@ -84,6 +89,7 @@ export class IdCard extends Verification {
 
         this.faceSpeakerValidator.start(
             () => {
+                this.recorder.stop();
                 validCounter = 0;
                 this.eventManager.dispatchEvent('capture_progress', {
                     job: "id_card",
@@ -92,6 +98,9 @@ export class IdCard extends Verification {
 
             },
             async (ii: ImageInfo) => {
+                if (validCounter === 0) {
+                    this.recorder.start();
+                }
                 validCounter++;
                 if (validCounter % 10 == 0)
                     this.eventManager.dispatchEvent('capture_progress', {
@@ -99,19 +108,27 @@ export class IdCard extends Verification {
                         progress: validCounter*2,
                     });
 
-                if (validCounter > 50) {
-                    this.faceSpeakerValidator.cleanup();
-                    this.eventManager.dispatchEvent('validating', {
-                        isValidating: true,
+                if (validCounter > 50) {     
+                    validCounter = 0;
+                    this.eventManager.dispatchEvent('capture_progress', {
+                        job: "id_card",
+                        progress: validCounter,
                     });
-                    let blob = await this.Camera.capture();
-                    let reader = new FileReader();
-                    reader.readAsArrayBuffer(blob);
-                    reader.onloadend = () => {
-                        let message = this.response(<ArrayBuffer>reader.result, ii)
-                        let buffer = ClientRequest.encode(message).finish();
-                        this.ws.send(buffer)
-                    };
+                    this.faceSpeakerValidator.cleanup();
+                    this.recorder.stop().then((chunks: Blob[]) => {
+                        this.eventManager.dispatchEvent('validating', {
+                            isValidating: true,
+                        });
+                
+                        let blob = new Blob(chunks, { type: "video/mp4;" });
+                        let reader = new FileReader();
+                        reader.readAsArrayBuffer(blob);
+                        reader.onloadend = () => {
+                            let message = this.response(<ArrayBuffer>reader.result,ii)
+                            let buffer = ClientRequest.encode(message).finish();
+                            this.ws.send(buffer)
+                        };
+                    });
                 }
             }
         );
