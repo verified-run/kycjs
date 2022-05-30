@@ -34,12 +34,14 @@ sessionBtn.onclick = () => {
     )
 
 
-
+    function closeModel() {
+        modal.style.display = "none";
+        kyc.cleanup();
+    }
     modal.style.display = "block";
     window.onclick = function (event) {
         if (event.target == modal) {
-            modal.style.display = "none";
-            kyc.cleanup();
+            closeModel();
         }
     }
 
@@ -114,8 +116,8 @@ sessionBtn.onclick = () => {
         }
     })
     kyc.eventManager.addListener('finish', (e: KycEventFinish) => {
+        closeModel();
         alert('finish');
-        kyc.cleanup()
     })
 
 }
