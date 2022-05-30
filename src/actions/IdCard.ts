@@ -48,8 +48,11 @@ export class IdCard extends Verification {
         this.Camera = new Camera(this.cameraStream);
         await this.Camera.setup("environment");
         let stream = this.Camera.getStream();
-        stream.addTrack(this.Camera.getStream().getAudioTracks()[0]);
-        this.recorder = new Recorder(stream);
+        stream.removeTrack(stream.getAudioTracks()[0])
+        this.recorder = new Recorder(stream, {
+            audioBitsPerSecond: 128000,
+            videoBitsPerSecond: 1000000,
+        });
 
         this.videoBox = {
             width: this.cameraStream.videoWidth,
@@ -79,7 +82,7 @@ export class IdCard extends Verification {
 
         this.retry();
     }
-    
+
     public retry(): void {
         let validCounter = 0;
         this.eventManager.dispatchEvent('capture_progress', {
@@ -105,10 +108,10 @@ export class IdCard extends Verification {
                 if (validCounter % 10 == 0)
                     this.eventManager.dispatchEvent('capture_progress', {
                         job: "id_card",
-                        progress: validCounter*2,
+                        progress: validCounter * 2,
                     });
 
-                if (validCounter > 50) {     
+                if (validCounter > 50) {
                     validCounter = 0;
                     this.eventManager.dispatchEvent('capture_progress', {
                         job: "id_card",
@@ -119,12 +122,12 @@ export class IdCard extends Verification {
                         this.eventManager.dispatchEvent('validating', {
                             isValidating: true,
                         });
-                
+
                         let blob = new Blob(chunks, { type: "video/mp4;" });
                         let reader = new FileReader();
                         reader.readAsArrayBuffer(blob);
                         reader.onloadend = () => {
-                            let message = this.response(<ArrayBuffer>reader.result,ii)
+                            let message = this.response(<ArrayBuffer>reader.result, ii)
                             let buffer = ClientRequest.encode(message).finish();
                             this.ws.send(buffer)
                         };
@@ -135,10 +138,10 @@ export class IdCard extends Verification {
     }
 
     async cleanup(): Promise<void> {
-        if(this.Camera)this.Camera.cleanup();
-        if(this.faceDetector)this.faceDetector.cleanup();
-        if(this.faceFeatureExtractor)this.faceFeatureExtractor.cleanup();
-        if(this.faceSpeakerValidator)this.faceSpeakerValidator.cleanup();
+        if (this.Camera) this.Camera.cleanup();
+        if (this.faceDetector) this.faceDetector.cleanup();
+        if (this.faceFeatureExtractor) this.faceFeatureExtractor.cleanup();
+        if (this.faceSpeakerValidator) this.faceSpeakerValidator.cleanup();
         this.cameraStream.remove()
         this.controlContainer.remove();
     }
