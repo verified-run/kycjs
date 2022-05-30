@@ -71,6 +71,9 @@ export class FaceText extends Verification {
                         });
                         return;
                     }
+                    this.eventManager.dispatchEvent('validating', {
+                        isValidating: true,
+                    });
 
                     let blob = new Blob(chunks, { type: "video/mp4;" });
                     let reader = new FileReader();
