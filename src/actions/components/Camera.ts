@@ -9,7 +9,10 @@ export class Camera {
             this.cameraStream =
             await navigator.mediaDevices.getUserMedia({
                 audio: true,
-                video: { facingMode },
+                video: { 
+                    facingMode ,
+                    aspectRatio: { ideal: 1.5 }
+                },
             });
 
         return new Promise((resolve) => {
