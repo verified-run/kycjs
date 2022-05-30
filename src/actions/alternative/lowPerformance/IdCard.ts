@@ -49,17 +49,9 @@ export class IdCard extends Verification {
             this.recorder.start();
             let validCounter = 0;
             this.recordInterval = setInterval(async ()=>{
-                this.eventManager.dispatchEvent('capture_progress', {
-                    job: "id_card",
-                    progress: validCounter * 2,
-                });
                 if(validCounter > 50){
                     clearInterval(this.recordInterval);
                     validCounter = 0;
-                    this.eventManager.dispatchEvent('capture_progress', {
-                        job: "id_card",
-                        progress: validCounter,
-                    });
                     this.recorder.stop().then((chunks: Blob[]) => {
                         this.eventManager.dispatchEvent('validating', {
                             isValidating: true,
@@ -75,8 +67,12 @@ export class IdCard extends Verification {
                         };
                     });
                 }
-                validCounter+=10;
-            }, 1000);
+                this.eventManager.dispatchEvent('capture_progress', {
+                    job: "id_card",
+                    progress: validCounter * 2,
+                });
+                validCounter++;
+            }, 100);
 
         })
 
