@@ -2,7 +2,8 @@ import { FaceFeatureExtractor } from "./FaceFeatureExtractor";
 import { ImageInfo } from "../../types";
 
 export class FaceSpeakerValidator {
-    protected validationInterval: NodeJS.Timer;
+    // protected validationInterval: NodeJS.Timer;
+    protected validationInterval: any;
     protected recordDuration: number;
 
     constructor(

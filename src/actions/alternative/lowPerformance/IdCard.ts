@@ -9,7 +9,8 @@ export class IdCard extends Verification {
     protected cameraStream: HTMLVideoElement;
     protected controlContainer: HTMLElement;
     protected captureBtn: HTMLButtonElement;
-    protected recordInterval: NodeJS.Timer;
+    // protected recordInterval: NodeJS.Timer;
+    protected recordInterval: any;
     
     public draw(): void {
         this.cameraStream = <HTMLVideoElement>document.createElement("video");

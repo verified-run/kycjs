@@ -9,7 +9,8 @@ export class CanvasRender  {
     private isActive = true;
 
     constructor(
-        private video: HTMLVideoElement,
+        // private video: HTMLVideoElement,
+        private video: any,
         private canvasSize: BoxSize,
         private faceFeatureExtractor: FaceFeatureExtractor
     ) {

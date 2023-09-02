@@ -1,7 +1,8 @@
 export class Recorder {
     private chunks: Blob[] = [];
     private mediaRecorder!: MediaRecorder;
-    private recordStopTimeout!: NodeJS.Timeout | null;
+    // private recordStopTimeout!: NodeJS.Timeout | null;
+    private recordStopTimeout!: any;
 
     constructor(stream: MediaStream, options: MediaRecorderOptions = {
         audioBitsPerSecond: 128000,
@@ -10,7 +11,7 @@ export class Recorder {
         let vm = this;
 
         this.mediaRecorder = new MediaRecorder(stream, options);
-        this.mediaRecorder.ondataavailable = (e) => {
+        this.mediaRecorder.ondataavailable = (e: any) => {
             vm.chunks.push(e.data);
         }
     }

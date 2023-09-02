@@ -16,7 +16,8 @@ export class WS {
   private events: EventMap = {}
   private sendChannel: Array<string | ArrayBufferLike | Blob | ArrayBufferView> = []
   private closed = false;
-  private pingInterval: NodeJS.Timer;
+  // private pingInterval: NodeJS.Timer;
+  private pingInterval: any;
 
   constructor(private identifier: string, private serverAdder?: string) {
     if (!this.serverAdder) {
