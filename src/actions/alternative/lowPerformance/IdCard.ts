@@ -9,7 +9,7 @@ export class IdCard extends Verification {
     protected cameraStream: HTMLVideoElement;
     protected controlContainer: HTMLElement;
     protected captureBtn: HTMLButtonElement;
-    protected recordInterval: NodeJS.Timer;
+    protected recordInterval: number;
     
     public draw(): void {
         this.cameraStream = <HTMLVideoElement>document.createElement("video");
@@ -48,7 +48,7 @@ export class IdCard extends Verification {
         this.captureBtn.addEventListener('click',async (ev:MouseEvent)=>{
             this.recorder.start();
             let validCounter = 0;
-            this.recordInterval = setInterval(async ()=>{
+            this.recordInterval = window.setInterval(async ()=>{
                 if(validCounter > 50){
                     clearInterval(this.recordInterval);
                     validCounter = 0;

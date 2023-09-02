@@ -16,7 +16,7 @@ export class WS {
   private events: EventMap = {}
   private sendChannel: Array<string | ArrayBufferLike | Blob | ArrayBufferView> = []
   private closed = false;
-  private pingInterval: NodeJS.Timer;
+  private pingInterval: number;
 
   constructor(private identifier: string, private serverAdder?: string) {
     if (!this.serverAdder) {
@@ -52,7 +52,7 @@ export class WS {
       console.log('handler not found: ', message.data)
     };
 
-    this.pingInterval = setInterval(
+    this.pingInterval = window.setInterval(
       () => {
         this.send(
           ClientRequest.encode(

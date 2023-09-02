@@ -100,13 +100,13 @@ sessionBtn.onclick = () => {
         }
         container.classList.remove('validating');
     })
-    let countDownInterval: NodeJS.Timer;
+    let countDownInterval: number;
 
     kyc.eventManager.addListener('recording', (e: KycEventRecording) => {
         let textBox = <HTMLProgressElement>document.getElementById("countdown");
         if(e.isRecording) {
             let startTime = new Date().getTime();
-            countDownInterval = setInterval(() => {
+            countDownInterval = window.setInterval(() => {
                 let time = new Date().getTime() - startTime;
                 textBox.innerText = `${(time/1000).toFixed(2)}s`
             }, 16)
