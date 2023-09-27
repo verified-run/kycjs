@@ -1,6 +1,6 @@
 {
   "name": "verified-run",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "js sdk for verified.run online verification platform / kyc",
   "author": "Hooman Naghiee<me@hoomanna.com>",
   "license": "apache-2.0",
