@@ -1,3 +1,4 @@
+"use strict";
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
 import * as $protobuf from "protobufjs/minimal";
 
@@ -7,7 +8,7 @@ const $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.
 // Exported root namespace
 const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
-export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
+export const ServerRequest = $root.ServerRequest = (() => {
 
     /**
      * Properties of a ServerRequest.
@@ -20,6 +21,7 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
      * @property {ServerRequest.IFaceAgreement|null} [faceAgreement] ServerRequest faceAgreement
      * @property {ServerRequest.IFaceMovement|null} [faceMovement] ServerRequest faceMovement
      * @property {ServerRequest.IIdCard|null} [idCard] ServerRequest idCard
+     * @property {ServerRequest.IIdCardSerial|null} [idCardSerial] ServerRequest idCardSerial
      * @property {ServerRequest.IError|null} [error] ServerRequest error
      * @property {ServerRequest.IJobs|null} [jobs] ServerRequest jobs
      * @property {ServerRequest.IPong|null} [pong] ServerRequest pong
@@ -97,6 +99,14 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
     ServerRequest.prototype.idCard = null;
 
     /**
+     * ServerRequest idCardSerial.
+     * @member {ServerRequest.IIdCardSerial|null|undefined} idCardSerial
+     * @memberof ServerRequest
+     * @instance
+     */
+    ServerRequest.prototype.idCardSerial = null;
+
+    /**
      * ServerRequest error.
      * @member {ServerRequest.IError|null|undefined} error
      * @memberof ServerRequest
@@ -125,12 +135,12 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
 
     /**
      * ServerRequest data.
-     * @member {"finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"jobs"|"pong"|undefined} data
+     * @member {"finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"idCardSerial"|"error"|"jobs"|"pong"|undefined} data
      * @memberof ServerRequest
      * @instance
      */
     Object.defineProperty(ServerRequest.prototype, "data", {
-        get: $util.oneOfGetter($oneOfFields = ["finish", "faceText", "faceAgreement", "faceMovement", "idCard", "error", "jobs", "pong"]),
+        get: $util.oneOfGetter($oneOfFields = ["finish", "faceText", "faceAgreement", "faceMovement", "idCard", "idCardSerial", "error", "jobs", "pong"]),
         set: $util.oneOfSetter($oneOfFields)
     });
 
@@ -178,6 +188,8 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             $root.ServerRequest.Jobs.encode(message.jobs, writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
         if (message.pong != null && Object.hasOwnProperty.call(message, "pong"))
             $root.ServerRequest.Pong.encode(message.pong, writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
+        if (message.idCardSerial != null && Object.hasOwnProperty.call(message, "idCardSerial"))
+            $root.ServerRequest.IdCardSerial.encode(message.idCardSerial, writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
         return writer;
     };
 
@@ -212,36 +224,50 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         while (reader.pos < end) {
             let tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.id = reader.string();
-                break;
-            case 2:
-                message.verified = reader.bool();
-                break;
-            case 5:
-                message.finish = $root.ServerRequest.Finish.decode(reader, reader.uint32());
-                break;
-            case 6:
-                message.faceText = $root.ServerRequest.FaceText.decode(reader, reader.uint32());
-                break;
-            case 7:
-                message.faceAgreement = $root.ServerRequest.FaceAgreement.decode(reader, reader.uint32());
-                break;
-            case 8:
-                message.faceMovement = $root.ServerRequest.FaceMovement.decode(reader, reader.uint32());
-                break;
-            case 9:
-                message.idCard = $root.ServerRequest.IdCard.decode(reader, reader.uint32());
-                break;
-            case 10:
-                message.error = $root.ServerRequest.Error.decode(reader, reader.uint32());
-                break;
-            case 11:
-                message.jobs = $root.ServerRequest.Jobs.decode(reader, reader.uint32());
-                break;
-            case 12:
-                message.pong = $root.ServerRequest.Pong.decode(reader, reader.uint32());
-                break;
+            case 1: {
+                    message.id = reader.string();
+                    break;
+                }
+            case 2: {
+                    message.verified = reader.bool();
+                    break;
+                }
+            case 5: {
+                    message.finish = $root.ServerRequest.Finish.decode(reader, reader.uint32());
+                    break;
+                }
+            case 6: {
+                    message.faceText = $root.ServerRequest.FaceText.decode(reader, reader.uint32());
+                    break;
+                }
+            case 7: {
+                    message.faceAgreement = $root.ServerRequest.FaceAgreement.decode(reader, reader.uint32());
+                    break;
+                }
+            case 8: {
+                    message.faceMovement = $root.ServerRequest.FaceMovement.decode(reader, reader.uint32());
+                    break;
+                }
+            case 9: {
+                    message.idCard = $root.ServerRequest.IdCard.decode(reader, reader.uint32());
+                    break;
+                }
+            case 13: {
+                    message.idCardSerial = $root.ServerRequest.IdCardSerial.decode(reader, reader.uint32());
+                    break;
+                }
+            case 10: {
+                    message.error = $root.ServerRequest.Error.decode(reader, reader.uint32());
+                    break;
+                }
+            case 11: {
+                    message.jobs = $root.ServerRequest.Jobs.decode(reader, reader.uint32());
+                    break;
+                }
+            case 12: {
+                    message.pong = $root.ServerRequest.Pong.decode(reader, reader.uint32());
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -332,6 +358,16 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
                     return "idCard." + error;
             }
         }
+        if (message.idCardSerial != null && message.hasOwnProperty("idCardSerial")) {
+            if (properties.data === 1)
+                return "data: multiple values";
+            properties.data = 1;
+            {
+                let error = $root.ServerRequest.IdCardSerial.verify(message.idCardSerial);
+                if (error)
+                    return "idCardSerial." + error;
+            }
+        }
         if (message.error != null && message.hasOwnProperty("error")) {
             if (properties.data === 1)
                 return "data: multiple values";
@@ -405,6 +441,11 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             if (typeof object.idCard !== "object")
                 throw TypeError(".ServerRequest.idCard: object expected");
             message.idCard = $root.ServerRequest.IdCard.fromObject(object.idCard);
+        }
+        if (object.idCardSerial != null) {
+            if (typeof object.idCardSerial !== "object")
+                throw TypeError(".ServerRequest.idCardSerial: object expected");
+            message.idCardSerial = $root.ServerRequest.IdCardSerial.fromObject(object.idCardSerial);
         }
         if (object.error != null) {
             if (typeof object.error !== "object")
@@ -485,6 +526,11 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             if (options.oneofs)
                 object.data = "pong";
         }
+        if (message.idCardSerial != null && message.hasOwnProperty("idCardSerial")) {
+            object.idCardSerial = $root.ServerRequest.IdCardSerial.toObject(message.idCardSerial, options);
+            if (options.oneofs)
+                object.data = "idCardSerial";
+        }
         return object;
     };
 
@@ -499,7 +545,22 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
-    ServerRequest.Finish = (function(Finish) {
+    /**
+     * Gets the default type url for ServerRequest
+     * @function getTypeUrl
+     * @memberof ServerRequest
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    ServerRequest.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/ServerRequest";
+    };
+
+    ServerRequest.Finish = (function() {
 
         /**
          * Properties of a Finish.
@@ -656,10 +717,25 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return Finish;
-    })(ServerRequest.Finish || {});
+        /**
+         * Gets the default type url for Finish
+         * @function getTypeUrl
+         * @memberof ServerRequest.Finish
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Finish.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.Finish";
+        };
 
-    ServerRequest.Job = (function(Job) {
+        return Finish;
+    })();
+
+    ServerRequest.Job = (function() {
 
         /**
          * Properties of a Job.
@@ -773,15 +849,18 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.id = reader.string();
-                    break;
-                case 2:
-                    message.action = reader.string();
-                    break;
-                case 3:
-                    message.verified = reader.bool();
-                    break;
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.action = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.verified = reader.bool();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -888,10 +967,25 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return Job;
-    })(ServerRequest.Job || {});
+        /**
+         * Gets the default type url for Job
+         * @function getTypeUrl
+         * @memberof ServerRequest.Job
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Job.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.Job";
+        };
 
-    ServerRequest.Jobs = (function(Jobs) {
+        return Job;
+    })();
+
+    ServerRequest.Jobs = (function() {
 
         /**
          * Properties of a Jobs.
@@ -985,11 +1079,12 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    if (!(message.job && message.job.length))
-                        message.job = [];
-                    message.job.push($root.ServerRequest.Job.decode(reader, reader.uint32()));
-                    break;
+                case 1: {
+                        if (!(message.job && message.job.length))
+                            message.job = [];
+                        message.job.push($root.ServerRequest.Job.decode(reader, reader.uint32()));
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1096,10 +1191,25 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return Jobs;
-    })(ServerRequest.Jobs || {});
+        /**
+         * Gets the default type url for Jobs
+         * @function getTypeUrl
+         * @memberof ServerRequest.Jobs
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Jobs.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.Jobs";
+        };
 
-    ServerRequest.FaceText = (function(FaceText) {
+        return Jobs;
+    })();
+
+    ServerRequest.FaceText = (function() {
 
         /**
          * Properties of a FaceText.
@@ -1191,9 +1301,10 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 2:
-                    message.text = reader.string();
-                    break;
+                case 2: {
+                        message.text = reader.string();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1283,10 +1394,25 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return FaceText;
-    })(ServerRequest.FaceText || {});
+        /**
+         * Gets the default type url for FaceText
+         * @function getTypeUrl
+         * @memberof ServerRequest.FaceText
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        FaceText.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.FaceText";
+        };
 
-    ServerRequest.FaceAgreement = (function(FaceAgreement) {
+        return FaceText;
+    })();
+
+    ServerRequest.FaceAgreement = (function() {
 
         /**
          * Properties of a FaceAgreement.
@@ -1378,9 +1504,10 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 2:
-                    message.text = reader.string();
-                    break;
+                case 2: {
+                        message.text = reader.string();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1470,10 +1597,25 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return FaceAgreement;
-    })(ServerRequest.FaceAgreement || {});
+        /**
+         * Gets the default type url for FaceAgreement
+         * @function getTypeUrl
+         * @memberof ServerRequest.FaceAgreement
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        FaceAgreement.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.FaceAgreement";
+        };
 
-    ServerRequest.FaceMovement = (function(FaceMovement) {
+        return FaceAgreement;
+    })();
+
+    ServerRequest.FaceMovement = (function() {
 
         /**
          * Properties of a FaceMovement.
@@ -1563,18 +1705,33 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         FaceMovement.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ServerRequest.FaceMovement(), key;
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ServerRequest.FaceMovement(), key, value;
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 2:
-                    reader.skip().pos++;
-                    if (message.directions === $util.emptyObject)
-                        message.directions = {};
-                    key = reader.int32();
-                    reader.pos++;
-                    message.directions[key] = reader.int32();
-                    break;
+                case 2: {
+                        if (message.directions === $util.emptyObject)
+                            message.directions = {};
+                        let end2 = reader.uint32() + reader.pos;
+                        key = 0;
+                        value = 0;
+                        while (reader.pos < end2) {
+                            let tag2 = reader.uint32();
+                            switch (tag2 >>> 3) {
+                            case 1:
+                                key = reader.int32();
+                                break;
+                            case 2:
+                                value = reader.int32();
+                                break;
+                            default:
+                                reader.skipType(tag2 & 7);
+                                break;
+                            }
+                        }
+                        message.directions[key] = value;
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1649,6 +1806,12 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
                 message.directions = {};
                 for (let keys = Object.keys(object.directions), i = 0; i < keys.length; ++i)
                     switch (object.directions[keys[i]]) {
+                    default:
+                        if (typeof object.directions[keys[i]] === "number") {
+                            message.directions[keys[i]] = object.directions[keys[i]];
+                            break;
+                        }
+                        break;
                     case "UP":
                     case 0:
                         message.directions[keys[i]] = 0;
@@ -1689,7 +1852,7 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             if (message.directions && (keys2 = Object.keys(message.directions)).length) {
                 object.directions = {};
                 for (let j = 0; j < keys2.length; ++j)
-                    object.directions[keys2[j]] = options.enums === String ? $root.ServerRequest.FaceMovement.Direction[message.directions[keys2[j]]] : message.directions[keys2[j]];
+                    object.directions[keys2[j]] = options.enums === String ? $root.ServerRequest.FaceMovement.Direction[message.directions[keys2[j]]] === undefined ? message.directions[keys2[j]] : $root.ServerRequest.FaceMovement.Direction[message.directions[keys2[j]]] : message.directions[keys2[j]];
             }
             return object;
         };
@@ -1706,9 +1869,24 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         };
 
         /**
+         * Gets the default type url for FaceMovement
+         * @function getTypeUrl
+         * @memberof ServerRequest.FaceMovement
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        FaceMovement.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.FaceMovement";
+        };
+
+        /**
          * Direction enum.
          * @name ServerRequest.FaceMovement.Direction
-         * @enum {string}
+         * @enum {number}
          * @property {number} UP=0 UP value
          * @property {number} DOWN=1 DOWN value
          * @property {number} LEFT=2 LEFT value
@@ -1724,9 +1902,9 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
         })();
 
         return FaceMovement;
-    })(ServerRequest.FaceMovement || {});
+    })();
 
-    ServerRequest.IdCard = (function(IdCard) {
+    ServerRequest.IdCard = (function() {
 
         /**
          * Properties of an IdCard.
@@ -1818,9 +1996,10 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 2:
-                    message.placeholder = reader.string();
-                    break;
+                case 2: {
+                        message.placeholder = reader.string();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1910,10 +2089,200 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return IdCard;
-    })(ServerRequest.IdCard || {});
+        /**
+         * Gets the default type url for IdCard
+         * @function getTypeUrl
+         * @memberof ServerRequest.IdCard
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        IdCard.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.IdCard";
+        };
 
-    ServerRequest.Error = (function(Error) {
+        return IdCard;
+    })();
+
+    ServerRequest.IdCardSerial = (function() {
+
+        /**
+         * Properties of an IdCardSerial.
+         * @memberof ServerRequest
+         * @interface IIdCardSerial
+         */
+
+        /**
+         * Constructs a new IdCardSerial.
+         * @memberof ServerRequest
+         * @classdesc Represents an IdCardSerial.
+         * @implements IIdCardSerial
+         * @constructor
+         * @param {ServerRequest.IIdCardSerial=} [properties] Properties to set
+         */
+        function IdCardSerial(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new IdCardSerial instance using the specified properties.
+         * @function create
+         * @memberof ServerRequest.IdCardSerial
+         * @static
+         * @param {ServerRequest.IIdCardSerial=} [properties] Properties to set
+         * @returns {ServerRequest.IdCardSerial} IdCardSerial instance
+         */
+        IdCardSerial.create = function create(properties) {
+            return new IdCardSerial(properties);
+        };
+
+        /**
+         * Encodes the specified IdCardSerial message. Does not implicitly {@link ServerRequest.IdCardSerial.verify|verify} messages.
+         * @function encode
+         * @memberof ServerRequest.IdCardSerial
+         * @static
+         * @param {ServerRequest.IIdCardSerial} message IdCardSerial message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        IdCardSerial.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified IdCardSerial message, length delimited. Does not implicitly {@link ServerRequest.IdCardSerial.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof ServerRequest.IdCardSerial
+         * @static
+         * @param {ServerRequest.IIdCardSerial} message IdCardSerial message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        IdCardSerial.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an IdCardSerial message from the specified reader or buffer.
+         * @function decode
+         * @memberof ServerRequest.IdCardSerial
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {ServerRequest.IdCardSerial} IdCardSerial
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        IdCardSerial.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ServerRequest.IdCardSerial();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an IdCardSerial message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof ServerRequest.IdCardSerial
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {ServerRequest.IdCardSerial} IdCardSerial
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        IdCardSerial.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an IdCardSerial message.
+         * @function verify
+         * @memberof ServerRequest.IdCardSerial
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        IdCardSerial.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates an IdCardSerial message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof ServerRequest.IdCardSerial
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {ServerRequest.IdCardSerial} IdCardSerial
+         */
+        IdCardSerial.fromObject = function fromObject(object) {
+            if (object instanceof $root.ServerRequest.IdCardSerial)
+                return object;
+            return new $root.ServerRequest.IdCardSerial();
+        };
+
+        /**
+         * Creates a plain object from an IdCardSerial message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof ServerRequest.IdCardSerial
+         * @static
+         * @param {ServerRequest.IdCardSerial} message IdCardSerial
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        IdCardSerial.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this IdCardSerial to JSON.
+         * @function toJSON
+         * @memberof ServerRequest.IdCardSerial
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        IdCardSerial.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for IdCardSerial
+         * @function getTypeUrl
+         * @memberof ServerRequest.IdCardSerial
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        IdCardSerial.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.IdCardSerial";
+        };
+
+        return IdCardSerial;
+    })();
+
+    ServerRequest.Error = (function() {
 
         /**
          * Properties of an Error.
@@ -2016,12 +2385,14 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.code = reader.string();
-                    break;
-                case 2:
-                    message.Message = reader.string();
-                    break;
+                case 1: {
+                        message.code = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.Message = reader.string();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -2120,10 +2491,25 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return Error;
-    })(ServerRequest.Error || {});
+        /**
+         * Gets the default type url for Error
+         * @function getTypeUrl
+         * @memberof ServerRequest.Error
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Error.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.Error";
+        };
 
-    ServerRequest.Pong = (function(Pong) {
+        return Error;
+    })();
+
+    ServerRequest.Pong = (function() {
 
         /**
          * Properties of a Pong.
@@ -2280,13 +2666,28 @@ export const ServerRequest = $root.ServerRequest = ((ServerRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for Pong
+         * @function getTypeUrl
+         * @memberof ServerRequest.Pong
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Pong.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ServerRequest.Pong";
+        };
+
         return Pong;
-    })(ServerRequest.Pong || {});
+    })();
 
     return ServerRequest;
-})($root.ServerRequest || {});
+})();
 
-export const ServerRequestList = $root.ServerRequestList = ((ServerRequestList) => {
+export const ServerRequestList = $root.ServerRequestList = (() => {
 
     /**
      * Properties of a ServerRequestList.
@@ -2380,11 +2781,12 @@ export const ServerRequestList = $root.ServerRequestList = ((ServerRequestList) 
         while (reader.pos < end) {
             let tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                if (!(message.serverRequests && message.serverRequests.length))
-                    message.serverRequests = [];
-                message.serverRequests.push($root.ServerRequest.decode(reader, reader.uint32()));
-                break;
+            case 1: {
+                    if (!(message.serverRequests && message.serverRequests.length))
+                        message.serverRequests = [];
+                    message.serverRequests.push($root.ServerRequest.decode(reader, reader.uint32()));
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -2491,10 +2893,25 @@ export const ServerRequestList = $root.ServerRequestList = ((ServerRequestList) 
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
-    return ServerRequestList;
-})($root.ServerRequestList || {});
+    /**
+     * Gets the default type url for ServerRequestList
+     * @function getTypeUrl
+     * @memberof ServerRequestList
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    ServerRequestList.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/ServerRequestList";
+    };
 
-export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
+    return ServerRequestList;
+})();
+
+export const ClientRequest = $root.ClientRequest = (() => {
 
     /**
      * Properties of a ClientRequest.
@@ -2506,6 +2923,7 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
      * @property {ClientRequest.IFaceAgreement|null} [faceAgreement] ClientRequest faceAgreement
      * @property {ClientRequest.IFaceMovement|null} [faceMovement] ClientRequest faceMovement
      * @property {ClientRequest.IIdCard|null} [idCard] ClientRequest idCard
+     * @property {ClientRequest.IIdCardSerial|null} [idCardSerial] ClientRequest idCardSerial
      * @property {ClientRequest.IError|null} [error] ClientRequest error
      * @property {ClientRequest.IPing|null} [ping] ClientRequest ping
      */
@@ -2574,6 +2992,14 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
     ClientRequest.prototype.idCard = null;
 
     /**
+     * ClientRequest idCardSerial.
+     * @member {ClientRequest.IIdCardSerial|null|undefined} idCardSerial
+     * @memberof ClientRequest
+     * @instance
+     */
+    ClientRequest.prototype.idCardSerial = null;
+
+    /**
      * ClientRequest error.
      * @member {ClientRequest.IError|null|undefined} error
      * @memberof ClientRequest
@@ -2594,12 +3020,12 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
 
     /**
      * ClientRequest data.
-     * @member {"start"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"ping"|undefined} data
+     * @member {"start"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"idCardSerial"|"error"|"ping"|undefined} data
      * @memberof ClientRequest
      * @instance
      */
     Object.defineProperty(ClientRequest.prototype, "data", {
-        get: $util.oneOfGetter($oneOfFields = ["start", "faceText", "faceAgreement", "faceMovement", "idCard", "error", "ping"]),
+        get: $util.oneOfGetter($oneOfFields = ["start", "faceText", "faceAgreement", "faceMovement", "idCard", "idCardSerial", "error", "ping"]),
         set: $util.oneOfSetter($oneOfFields)
     });
 
@@ -2641,6 +3067,8 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             $root.ClientRequest.IdCard.encode(message.idCard, writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
         if (message.error != null && Object.hasOwnProperty.call(message, "error"))
             $root.ClientRequest.Error.encode(message.error, writer.uint32(/* id 10, wireType 2 =*/82).fork()).ldelim();
+        if (message.idCardSerial != null && Object.hasOwnProperty.call(message, "idCardSerial"))
+            $root.ClientRequest.IdCardSerial.encode(message.idCardSerial, writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
         if (message.ping != null && Object.hasOwnProperty.call(message, "ping"))
             $root.ClientRequest.Ping.encode(message.ping, writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
         return writer;
@@ -2677,30 +3105,42 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
         while (reader.pos < end) {
             let tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.id = reader.string();
-                break;
-            case 5:
-                message.start = $root.ClientRequest.Start.decode(reader, reader.uint32());
-                break;
-            case 6:
-                message.faceText = $root.ClientRequest.FaceText.decode(reader, reader.uint32());
-                break;
-            case 7:
-                message.faceAgreement = $root.ClientRequest.FaceAgreement.decode(reader, reader.uint32());
-                break;
-            case 8:
-                message.faceMovement = $root.ClientRequest.FaceMovement.decode(reader, reader.uint32());
-                break;
-            case 9:
-                message.idCard = $root.ClientRequest.IdCard.decode(reader, reader.uint32());
-                break;
-            case 10:
-                message.error = $root.ClientRequest.Error.decode(reader, reader.uint32());
-                break;
-            case 12:
-                message.ping = $root.ClientRequest.Ping.decode(reader, reader.uint32());
-                break;
+            case 1: {
+                    message.id = reader.string();
+                    break;
+                }
+            case 5: {
+                    message.start = $root.ClientRequest.Start.decode(reader, reader.uint32());
+                    break;
+                }
+            case 6: {
+                    message.faceText = $root.ClientRequest.FaceText.decode(reader, reader.uint32());
+                    break;
+                }
+            case 7: {
+                    message.faceAgreement = $root.ClientRequest.FaceAgreement.decode(reader, reader.uint32());
+                    break;
+                }
+            case 8: {
+                    message.faceMovement = $root.ClientRequest.FaceMovement.decode(reader, reader.uint32());
+                    break;
+                }
+            case 9: {
+                    message.idCard = $root.ClientRequest.IdCard.decode(reader, reader.uint32());
+                    break;
+                }
+            case 11: {
+                    message.idCardSerial = $root.ClientRequest.IdCardSerial.decode(reader, reader.uint32());
+                    break;
+                }
+            case 10: {
+                    message.error = $root.ClientRequest.Error.decode(reader, reader.uint32());
+                    break;
+                }
+            case 12: {
+                    message.ping = $root.ClientRequest.Ping.decode(reader, reader.uint32());
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -2788,6 +3228,16 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
                     return "idCard." + error;
             }
         }
+        if (message.idCardSerial != null && message.hasOwnProperty("idCardSerial")) {
+            if (properties.data === 1)
+                return "data: multiple values";
+            properties.data = 1;
+            {
+                let error = $root.ClientRequest.IdCardSerial.verify(message.idCardSerial);
+                if (error)
+                    return "idCardSerial." + error;
+            }
+        }
         if (message.error != null && message.hasOwnProperty("error")) {
             if (properties.data === 1)
                 return "data: multiple values";
@@ -2850,6 +3300,11 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
                 throw TypeError(".ClientRequest.idCard: object expected");
             message.idCard = $root.ClientRequest.IdCard.fromObject(object.idCard);
         }
+        if (object.idCardSerial != null) {
+            if (typeof object.idCardSerial !== "object")
+                throw TypeError(".ClientRequest.idCardSerial: object expected");
+            message.idCardSerial = $root.ClientRequest.IdCardSerial.fromObject(object.idCardSerial);
+        }
         if (object.error != null) {
             if (typeof object.error !== "object")
                 throw TypeError(".ClientRequest.error: object expected");
@@ -2910,6 +3365,11 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             if (options.oneofs)
                 object.data = "error";
         }
+        if (message.idCardSerial != null && message.hasOwnProperty("idCardSerial")) {
+            object.idCardSerial = $root.ClientRequest.IdCardSerial.toObject(message.idCardSerial, options);
+            if (options.oneofs)
+                object.data = "idCardSerial";
+        }
         if (message.ping != null && message.hasOwnProperty("ping")) {
             object.ping = $root.ClientRequest.Ping.toObject(message.ping, options);
             if (options.oneofs)
@@ -2929,7 +3389,22 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
-    ClientRequest.Start = (function(Start) {
+    /**
+     * Gets the default type url for ClientRequest
+     * @function getTypeUrl
+     * @memberof ClientRequest
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    ClientRequest.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/ClientRequest";
+    };
+
+    ClientRequest.Start = (function() {
 
         /**
          * Properties of a Start.
@@ -3076,24 +3551,30 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.identifier = reader.string();
-                    break;
-                case 2:
-                    message.appName = reader.string();
-                    break;
-                case 3:
-                    message.packageName = reader.string();
-                    break;
-                case 4:
-                    message.manufacturer = reader.string();
-                    break;
-                case 5:
-                    message.platform = reader.string();
-                    break;
-                case 6:
-                    message.platformVersion = reader.string();
-                    break;
+                case 1: {
+                        message.identifier = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.appName = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.packageName = reader.string();
+                        break;
+                    }
+                case 4: {
+                        message.manufacturer = reader.string();
+                        break;
+                    }
+                case 5: {
+                        message.platform = reader.string();
+                        break;
+                    }
+                case 6: {
+                        message.platformVersion = reader.string();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -3224,10 +3705,25 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return Start;
-    })(ClientRequest.Start || {});
+        /**
+         * Gets the default type url for Start
+         * @function getTypeUrl
+         * @memberof ClientRequest.Start
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Start.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ClientRequest.Start";
+        };
 
-    ClientRequest.FaceText = (function(FaceText) {
+        return Start;
+    })();
+
+    ClientRequest.FaceText = (function() {
 
         /**
          * Properties of a FaceText.
@@ -3319,9 +3815,10 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.video = reader.bytes();
-                    break;
+                case 1: {
+                        message.video = reader.bytes();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -3378,7 +3875,7 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             if (object.video != null)
                 if (typeof object.video === "string")
                     $util.base64.decode(object.video, message.video = $util.newBuffer($util.base64.length(object.video)), 0);
-                else if (object.video.length)
+                else if (object.video.length >= 0)
                     message.video = object.video;
             return message;
         };
@@ -3420,10 +3917,25 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return FaceText;
-    })(ClientRequest.FaceText || {});
+        /**
+         * Gets the default type url for FaceText
+         * @function getTypeUrl
+         * @memberof ClientRequest.FaceText
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        FaceText.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ClientRequest.FaceText";
+        };
 
-    ClientRequest.FaceAgreement = (function(FaceAgreement) {
+        return FaceText;
+    })();
+
+    ClientRequest.FaceAgreement = (function() {
 
         /**
          * Properties of a FaceAgreement.
@@ -3515,9 +4027,10 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.video = reader.bytes();
-                    break;
+                case 1: {
+                        message.video = reader.bytes();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -3574,7 +4087,7 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             if (object.video != null)
                 if (typeof object.video === "string")
                     $util.base64.decode(object.video, message.video = $util.newBuffer($util.base64.length(object.video)), 0);
-                else if (object.video.length)
+                else if (object.video.length >= 0)
                     message.video = object.video;
             return message;
         };
@@ -3616,10 +4129,25 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return FaceAgreement;
-    })(ClientRequest.FaceAgreement || {});
+        /**
+         * Gets the default type url for FaceAgreement
+         * @function getTypeUrl
+         * @memberof ClientRequest.FaceAgreement
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        FaceAgreement.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ClientRequest.FaceAgreement";
+        };
 
-    ClientRequest.FaceMovement = (function(FaceMovement) {
+        return FaceAgreement;
+    })();
+
+    ClientRequest.FaceMovement = (function() {
 
         /**
          * Properties of a FaceMovement.
@@ -3711,9 +4239,10 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.video = reader.bytes();
-                    break;
+                case 1: {
+                        message.video = reader.bytes();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -3770,7 +4299,7 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             if (object.video != null)
                 if (typeof object.video === "string")
                     $util.base64.decode(object.video, message.video = $util.newBuffer($util.base64.length(object.video)), 0);
-                else if (object.video.length)
+                else if (object.video.length >= 0)
                     message.video = object.video;
             return message;
         };
@@ -3812,10 +4341,25 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return FaceMovement;
-    })(ClientRequest.FaceMovement || {});
+        /**
+         * Gets the default type url for FaceMovement
+         * @function getTypeUrl
+         * @memberof ClientRequest.FaceMovement
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        FaceMovement.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ClientRequest.FaceMovement";
+        };
 
-    ClientRequest.IdCard = (function(IdCard) {
+        return FaceMovement;
+    })();
+
+    ClientRequest.IdCard = (function() {
 
         /**
          * Properties of an IdCard.
@@ -3918,12 +4462,14 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.image = reader.bytes();
-                    break;
-                case 2:
-                    message.faceBox = $root.ClientRequest.box.decode(reader, reader.uint32());
-                    break;
+                case 1: {
+                        message.image = reader.bytes();
+                        break;
+                    }
+                case 2: {
+                        message.faceBox = $root.ClientRequest.box.decode(reader, reader.uint32());
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -3985,7 +4531,7 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             if (object.image != null)
                 if (typeof object.image === "string")
                     $util.base64.decode(object.image, message.image = $util.newBuffer($util.base64.length(object.image)), 0);
-                else if (object.image.length)
+                else if (object.image.length >= 0)
                     message.image = object.image;
             if (object.faceBox != null) {
                 if (typeof object.faceBox !== "object")
@@ -4036,10 +4582,228 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return IdCard;
-    })(ClientRequest.IdCard || {});
+        /**
+         * Gets the default type url for IdCard
+         * @function getTypeUrl
+         * @memberof ClientRequest.IdCard
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        IdCard.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ClientRequest.IdCard";
+        };
 
-    ClientRequest.box = (function(box) {
+        return IdCard;
+    })();
+
+    ClientRequest.IdCardSerial = (function() {
+
+        /**
+         * Properties of an IdCardSerial.
+         * @memberof ClientRequest
+         * @interface IIdCardSerial
+         * @property {string|null} [serial] IdCardSerial serial
+         */
+
+        /**
+         * Constructs a new IdCardSerial.
+         * @memberof ClientRequest
+         * @classdesc Represents an IdCardSerial.
+         * @implements IIdCardSerial
+         * @constructor
+         * @param {ClientRequest.IIdCardSerial=} [properties] Properties to set
+         */
+        function IdCardSerial(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * IdCardSerial serial.
+         * @member {string} serial
+         * @memberof ClientRequest.IdCardSerial
+         * @instance
+         */
+        IdCardSerial.prototype.serial = "";
+
+        /**
+         * Creates a new IdCardSerial instance using the specified properties.
+         * @function create
+         * @memberof ClientRequest.IdCardSerial
+         * @static
+         * @param {ClientRequest.IIdCardSerial=} [properties] Properties to set
+         * @returns {ClientRequest.IdCardSerial} IdCardSerial instance
+         */
+        IdCardSerial.create = function create(properties) {
+            return new IdCardSerial(properties);
+        };
+
+        /**
+         * Encodes the specified IdCardSerial message. Does not implicitly {@link ClientRequest.IdCardSerial.verify|verify} messages.
+         * @function encode
+         * @memberof ClientRequest.IdCardSerial
+         * @static
+         * @param {ClientRequest.IIdCardSerial} message IdCardSerial message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        IdCardSerial.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.serial != null && Object.hasOwnProperty.call(message, "serial"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.serial);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified IdCardSerial message, length delimited. Does not implicitly {@link ClientRequest.IdCardSerial.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof ClientRequest.IdCardSerial
+         * @static
+         * @param {ClientRequest.IIdCardSerial} message IdCardSerial message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        IdCardSerial.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an IdCardSerial message from the specified reader or buffer.
+         * @function decode
+         * @memberof ClientRequest.IdCardSerial
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {ClientRequest.IdCardSerial} IdCardSerial
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        IdCardSerial.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.ClientRequest.IdCardSerial();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.serial = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an IdCardSerial message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof ClientRequest.IdCardSerial
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {ClientRequest.IdCardSerial} IdCardSerial
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        IdCardSerial.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an IdCardSerial message.
+         * @function verify
+         * @memberof ClientRequest.IdCardSerial
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        IdCardSerial.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.serial != null && message.hasOwnProperty("serial"))
+                if (!$util.isString(message.serial))
+                    return "serial: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an IdCardSerial message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof ClientRequest.IdCardSerial
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {ClientRequest.IdCardSerial} IdCardSerial
+         */
+        IdCardSerial.fromObject = function fromObject(object) {
+            if (object instanceof $root.ClientRequest.IdCardSerial)
+                return object;
+            let message = new $root.ClientRequest.IdCardSerial();
+            if (object.serial != null)
+                message.serial = String(object.serial);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an IdCardSerial message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof ClientRequest.IdCardSerial
+         * @static
+         * @param {ClientRequest.IdCardSerial} message IdCardSerial
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        IdCardSerial.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.serial = "";
+            if (message.serial != null && message.hasOwnProperty("serial"))
+                object.serial = message.serial;
+            return object;
+        };
+
+        /**
+         * Converts this IdCardSerial to JSON.
+         * @function toJSON
+         * @memberof ClientRequest.IdCardSerial
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        IdCardSerial.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for IdCardSerial
+         * @function getTypeUrl
+         * @memberof ClientRequest.IdCardSerial
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        IdCardSerial.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ClientRequest.IdCardSerial";
+        };
+
+        return IdCardSerial;
+    })();
+
+    ClientRequest.box = (function() {
 
         /**
          * Properties of a box.
@@ -4164,18 +4928,22 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.x = reader.int32();
-                    break;
-                case 2:
-                    message.y = reader.int32();
-                    break;
-                case 3:
-                    message.w = reader.int32();
-                    break;
-                case 4:
-                    message.h = reader.int32();
-                    break;
+                case 1: {
+                        message.x = reader.int32();
+                        break;
+                    }
+                case 2: {
+                        message.y = reader.int32();
+                        break;
+                    }
+                case 3: {
+                        message.w = reader.int32();
+                        break;
+                    }
+                case 4: {
+                        message.h = reader.int32();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -4290,10 +5058,25 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return box;
-    })(ClientRequest.box || {});
+        /**
+         * Gets the default type url for box
+         * @function getTypeUrl
+         * @memberof ClientRequest.box
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        box.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ClientRequest.box";
+        };
 
-    ClientRequest.Error = (function(Error) {
+        return box;
+    })();
+
+    ClientRequest.Error = (function() {
 
         /**
          * Properties of an Error.
@@ -4396,12 +5179,14 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.code = reader.string();
-                    break;
-                case 2:
-                    message.Message = reader.string();
-                    break;
+                case 1: {
+                        message.code = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.Message = reader.string();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -4500,10 +5285,25 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return Error;
-    })(ClientRequest.Error || {});
+        /**
+         * Gets the default type url for Error
+         * @function getTypeUrl
+         * @memberof ClientRequest.Error
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Error.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ClientRequest.Error";
+        };
 
-    ClientRequest.Ping = (function(Ping) {
+        return Error;
+    })();
+
+    ClientRequest.Ping = (function() {
 
         /**
          * Properties of a Ping.
@@ -4660,8 +5460,23 @@ export const ClientRequest = $root.ClientRequest = ((ClientRequest) => {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for Ping
+         * @function getTypeUrl
+         * @memberof ClientRequest.Ping
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Ping.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/ClientRequest.Ping";
+        };
+
         return Ping;
-    })(ClientRequest.Ping || {});
+    })();
 
     return ClientRequest;
 })($root.ClientRequest || {});

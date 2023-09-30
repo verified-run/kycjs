@@ -1,5 +1,5 @@
-import * as Long from "long";
-
+import * as $protobuf from "protobufjs";
+import Long = require("long");
 /** Properties of a ServerRequest. */
 export interface IServerRequest {
 
@@ -23,6 +23,9 @@ export interface IServerRequest {
 
     /** ServerRequest idCard */
     idCard?: (ServerRequest.IIdCard|null);
+
+    /** ServerRequest idCardSerial */
+    idCardSerial?: (ServerRequest.IIdCardSerial|null);
 
     /** ServerRequest error */
     error?: (ServerRequest.IError|null);
@@ -64,6 +67,9 @@ export class ServerRequest implements IServerRequest {
     /** ServerRequest idCard. */
     public idCard?: (ServerRequest.IIdCard|null);
 
+    /** ServerRequest idCardSerial. */
+    public idCardSerial?: (ServerRequest.IIdCardSerial|null);
+
     /** ServerRequest error. */
     public error?: (ServerRequest.IError|null);
 
@@ -74,7 +80,7 @@ export class ServerRequest implements IServerRequest {
     public pong?: (ServerRequest.IPong|null);
 
     /** ServerRequest data. */
-    public data?: ("finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"jobs"|"pong");
+    public data?: ("finish"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"idCardSerial"|"error"|"jobs"|"pong");
 
     /**
      * Creates a new ServerRequest instance using the specified properties.
@@ -145,6 +151,13 @@ export class ServerRequest implements IServerRequest {
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for ServerRequest
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
 }
 
 export namespace ServerRequest {
@@ -231,6 +244,13 @@ export namespace ServerRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Finish
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a Job. */
@@ -333,6 +353,13 @@ export namespace ServerRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Job
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a Jobs. */
@@ -423,6 +450,13 @@ export namespace ServerRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Jobs
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a FaceText. */
@@ -513,6 +547,13 @@ export namespace ServerRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for FaceText
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a FaceAgreement. */
@@ -603,6 +644,13 @@ export namespace ServerRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for FaceAgreement
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a FaceMovement. */
@@ -693,6 +741,13 @@ export namespace ServerRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for FaceMovement
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     namespace FaceMovement {
@@ -794,6 +849,104 @@ export namespace ServerRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for IdCard
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of an IdCardSerial. */
+    interface IIdCardSerial {
+    }
+
+    /** Represents an IdCardSerial. */
+    class IdCardSerial implements IIdCardSerial {
+
+        /**
+         * Constructs a new IdCardSerial.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: ServerRequest.IIdCardSerial);
+
+        /**
+         * Creates a new IdCardSerial instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns IdCardSerial instance
+         */
+        public static create(properties?: ServerRequest.IIdCardSerial): ServerRequest.IdCardSerial;
+
+        /**
+         * Encodes the specified IdCardSerial message. Does not implicitly {@link ServerRequest.IdCardSerial.verify|verify} messages.
+         * @param message IdCardSerial message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: ServerRequest.IIdCardSerial, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified IdCardSerial message, length delimited. Does not implicitly {@link ServerRequest.IdCardSerial.verify|verify} messages.
+         * @param message IdCardSerial message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: ServerRequest.IIdCardSerial, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an IdCardSerial message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns IdCardSerial
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ServerRequest.IdCardSerial;
+
+        /**
+         * Decodes an IdCardSerial message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns IdCardSerial
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ServerRequest.IdCardSerial;
+
+        /**
+         * Verifies an IdCardSerial message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an IdCardSerial message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns IdCardSerial
+         */
+        public static fromObject(object: { [k: string]: any }): ServerRequest.IdCardSerial;
+
+        /**
+         * Creates a plain object from an IdCardSerial message. Also converts values to other types if specified.
+         * @param message IdCardSerial
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: ServerRequest.IdCardSerial, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this IdCardSerial to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for IdCardSerial
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of an Error. */
@@ -890,6 +1043,13 @@ export namespace ServerRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Error
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a Pong. */
@@ -974,6 +1134,13 @@ export namespace ServerRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Pong
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 }
 
@@ -1065,6 +1232,13 @@ export class ServerRequestList implements IServerRequestList {
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for ServerRequestList
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
 }
 
 /** Properties of a ClientRequest. */
@@ -1087,6 +1261,9 @@ export interface IClientRequest {
 
     /** ClientRequest idCard */
     idCard?: (ClientRequest.IIdCard|null);
+
+    /** ClientRequest idCardSerial */
+    idCardSerial?: (ClientRequest.IIdCardSerial|null);
 
     /** ClientRequest error */
     error?: (ClientRequest.IError|null);
@@ -1122,6 +1299,9 @@ export class ClientRequest implements IClientRequest {
     /** ClientRequest idCard. */
     public idCard?: (ClientRequest.IIdCard|null);
 
+    /** ClientRequest idCardSerial. */
+    public idCardSerial?: (ClientRequest.IIdCardSerial|null);
+
     /** ClientRequest error. */
     public error?: (ClientRequest.IError|null);
 
@@ -1129,7 +1309,7 @@ export class ClientRequest implements IClientRequest {
     public ping?: (ClientRequest.IPing|null);
 
     /** ClientRequest data. */
-    public data?: ("start"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"error"|"ping");
+    public data?: ("start"|"faceText"|"faceAgreement"|"faceMovement"|"idCard"|"idCardSerial"|"error"|"ping");
 
     /**
      * Creates a new ClientRequest instance using the specified properties.
@@ -1200,6 +1380,13 @@ export class ClientRequest implements IClientRequest {
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for ClientRequest
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
 }
 
 export namespace ClientRequest {
@@ -1322,6 +1509,13 @@ export namespace ClientRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Start
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a FaceText. */
@@ -1412,6 +1606,13 @@ export namespace ClientRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for FaceText
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a FaceAgreement. */
@@ -1502,6 +1703,13 @@ export namespace ClientRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for FaceAgreement
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a FaceMovement. */
@@ -1592,6 +1800,13 @@ export namespace ClientRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for FaceMovement
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of an IdCard. */
@@ -1688,6 +1903,110 @@ export namespace ClientRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for IdCard
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of an IdCardSerial. */
+    interface IIdCardSerial {
+
+        /** IdCardSerial serial */
+        serial?: (string|null);
+    }
+
+    /** Represents an IdCardSerial. */
+    class IdCardSerial implements IIdCardSerial {
+
+        /**
+         * Constructs a new IdCardSerial.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: ClientRequest.IIdCardSerial);
+
+        /** IdCardSerial serial. */
+        public serial: string;
+
+        /**
+         * Creates a new IdCardSerial instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns IdCardSerial instance
+         */
+        public static create(properties?: ClientRequest.IIdCardSerial): ClientRequest.IdCardSerial;
+
+        /**
+         * Encodes the specified IdCardSerial message. Does not implicitly {@link ClientRequest.IdCardSerial.verify|verify} messages.
+         * @param message IdCardSerial message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: ClientRequest.IIdCardSerial, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified IdCardSerial message, length delimited. Does not implicitly {@link ClientRequest.IdCardSerial.verify|verify} messages.
+         * @param message IdCardSerial message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: ClientRequest.IIdCardSerial, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an IdCardSerial message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns IdCardSerial
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ClientRequest.IdCardSerial;
+
+        /**
+         * Decodes an IdCardSerial message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns IdCardSerial
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ClientRequest.IdCardSerial;
+
+        /**
+         * Verifies an IdCardSerial message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an IdCardSerial message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns IdCardSerial
+         */
+        public static fromObject(object: { [k: string]: any }): ClientRequest.IdCardSerial;
+
+        /**
+         * Creates a plain object from an IdCardSerial message. Also converts values to other types if specified.
+         * @param message IdCardSerial
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: ClientRequest.IdCardSerial, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this IdCardSerial to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for IdCardSerial
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a box. */
@@ -1796,6 +2115,13 @@ export namespace ClientRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for box
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of an Error. */
@@ -1892,6 +2218,13 @@ export namespace ClientRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Error
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a Ping. */
@@ -1976,5 +2309,12 @@ export namespace ClientRequest {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Ping
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 }
